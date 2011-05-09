@@ -12,7 +12,7 @@ import org.collaboration.cloudmapping.model.Component;
 import org.collaboration.cloudmapping.model.ComponentSequence;
 
 /**
- * @author menzel
+ * @author menzel  
  * 
  */
 public class OptimalComponentSequence {
