@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="PNK2classes.jar" sourcepath="PNK2sources.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/aotearoadecisions"/>
+	<classpathentry kind="lib" path="aws-ec2-1.0-beta-9b-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
