@@ -11,8 +11,6 @@ import java.util.Set;
 import org.collaboration.cloudmapping.model.Component;
 import org.collaboration.cloudmapping.model.ComponentSequence;
 
-import de.fzi.aotearoa.shared.model.ahp.configuration.Decision;
-
 /**
  * @author menzel  
  * 
