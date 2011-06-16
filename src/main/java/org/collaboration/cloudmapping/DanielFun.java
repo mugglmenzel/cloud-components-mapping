@@ -37,8 +37,8 @@ public class DanielFun {
 			throw new IllegalArgumentException(INVALID_SYNTAX);
 
 		// Args
-		String accesskeyid = args[0];
-		String secretkey = args[1];
+		String accesskeyid = args[0]; //"AKIAI4EZAZY4OR6YL5OA"
+		String secretkey = args[1]; //"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"
 		String command = args[2];
 		String name = args[3];
 
@@ -69,6 +69,9 @@ public class DanielFun {
 			} else {
 				throw new IllegalArgumentException(INVALID_SYNTAX);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		} finally {
 			// Close connecton
 			context.close();
@@ -156,24 +159,24 @@ public class DanielFun {
 
 		Reservation<? extends RunningInstance> reservation = client
 				.getInstanceServices().runInstancesInRegion(null, null, // allow
-																		// ec2
-																		// to
-																		// chose
-																		// an
-																		// availability
-																		// zone
+						// ec2
+						// to
+						// chose
+						// an
+						// availability
+						// zone
 						"ami-ccf615a5", // alestic ami allows auto-invoke of
-										// user data scripts
+						// user data scripts
 						1, // minimum instances
 						1, // maximum instances
 						asType(InstanceType.M1_SMALL) // smallest instance size
 								.withKeyName(keyPairName) // key I created above
-								.withSecurityGroup(securityGroupName) // group I
-																		// created
-																		// above
-								.withUserData(script.getBytes())); // script to
-																	// run as
-																	// root
+								.withSecurityGroup(securityGroupName)); // group I
+								// created
+								// above
+								//.withUserData(script.getBytes())); // script to
+		// run as
+		// root
 
 		return Iterables.getOnlyElement(reservation);
 
