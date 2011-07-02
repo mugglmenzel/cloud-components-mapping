@@ -1,13 +1,32 @@
 package org.collaboration.cloudmapping.model;
 
-import java.util.Date;
+
 
 public class AMI {
 	
 	
 	String name = ""; //e.g. BitNami Tracks Stack 1.7.3-0 EBS (Windows Server 2008.r1.sp2) 
+
+	public AMI(String name) {
+		
+		this.name = name;
+	}
+
 	
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
+	
+	
+	/*
 	String us_East_AMI_Id = ""; // e.g. ami-82ea18eb
 	String europe_AMI_ID = "";
 	String us_West_AMI_ID = "";
@@ -30,4 +49,6 @@ public class AMI {
 	Date lastUpdate; //
 
 	String backedOn = ""; //EBS or S3; 
+	
+	*/
 }
