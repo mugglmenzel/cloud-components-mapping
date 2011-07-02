@@ -21,6 +21,8 @@ import org.jclouds.net.IPSocket;
 import org.jclouds.predicates.InetSocketAddressConnect;
 import org.jclouds.predicates.RetryablePredicate;
 import org.jclouds.rest.RestContext;
+import org.jclouds.scriptbuilder.ScriptBuilder;
+
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -28,7 +30,7 @@ import com.google.common.collect.Sets;
 
 public class DanielFun {
 
-	public static int PARAMETERS = 4;
+	public static int PARAMETERS = 0;
 	public static String INVALID_SYNTAX = "Invalid number of parameters. Syntax is: accesskeyid secretkey command name\nwhere command in create destroy";
 
 	public static void main(String[] args) throws TimeoutException {
@@ -37,10 +39,10 @@ public class DanielFun {
 			throw new IllegalArgumentException(INVALID_SYNTAX);
 
 		// Args
-		String accesskeyid = args[0]; //"AKIAI4EZAZY4OR6YL5OA"
-		String secretkey = args[1]; //"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"
-		String command = args[2];
-		String name = args[3];
+		String accesskeyid = "AKIAI4EZAZY4OR6YL5OA";
+		String secretkey = "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";
+		String command = "destroy";
+		String name = "daniel";
 
 		// Init
 		RestContext<EC2Client, EC2AsyncClient> context = new ComputeServiceContextFactory()
@@ -49,6 +51,7 @@ public class DanielFun {
 
 		// Get a synchronous client
 		EC2Client client = context.getApi();
+		
 
 		try {
 			if (command.equals("create")) {
@@ -144,16 +147,16 @@ public class DanielFun {
 
 	static RunningInstance runInstance(EC2Client client,
 			String securityGroupName, String keyPairName) {
-		String script = "";/*
-							 * new ScriptBuilder() // lamp install script
-							 * .addStatement
-							 * (exec("runurl run.alestic.com/apt/upgrade"))//
-							 * .addStatement
-							 * (exec("runurl run.alestic.com/install/lamp"))//
-							 * .addStatement
-							 * (exec("apt-get -y install openjdk-6-jdk"))// no
-							 * license agreement! .render(OsFamily.UNIX);
-							 */
+		String script =""; /* 
+							 new ScriptBuilder() // lamp install script
+							.addStatement
+							(exec("runurl run.alestic.com/apt/upgrade"))//
+							.addStatement
+							(exec("runurl run.alestic.com/install/lamp"))//
+							.addStatement
+							 (exec("apt-get -y install openjdk-6-jdk"))// no
+							license agreement! .render(OsFamily.UNIX);*/
+							 
 
 		System.out.printf("%d: running instance%n", System.currentTimeMillis());
 
