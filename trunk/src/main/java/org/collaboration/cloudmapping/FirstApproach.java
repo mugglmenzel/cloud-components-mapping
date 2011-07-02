@@ -42,6 +42,7 @@ public class FirstApproach {
 		Instance comperator;
 		
 		//sort instances by @param perfValue 
+		//no efficient algorithm! We should discuss better solutions
 		while (!instances.isEmpty()){
 			bestInstance = instances.get(0);
 			for (int i = 1; i < sortedInst.size(); i++){
