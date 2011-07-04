@@ -20,8 +20,8 @@ public class FirstApproach {
 	public static void main(String[] args) {
 
 		// add your amis and hardware components
-		amis.add(new AMI("ami_Name_123"));
-		amis.add(new AMI("AMI_name_234"));
+		amis.add(new AMI("AMI_Name_123"));
+		amis.add(new AMI("AMI_Name_234"));
 		resources.add(new EC2Resource("m1.small", 5D, 10D));
 		resources.add(new EC2Resource("m1.large", 10D, 12D));
 		resources.add(new EC2Resource("m1.xlarge", 12D, 32D));
