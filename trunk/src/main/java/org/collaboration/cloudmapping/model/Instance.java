@@ -13,7 +13,7 @@ public class Instance {
 		this.ami = ami;
 		this.ec2 = ec2;
 		//a very simple way to evaluate performance
-		this.perfValue = this.ec2.getCostPerHour() / this.ec2.getPerformace(); 
+		this.perfValue = this.ec2.getPerformace() / this.ec2.getCostPerHour(); 
 	}
 
 	public double getPerfValue() {
