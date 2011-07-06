@@ -5,6 +5,20 @@
 	<artifactId>CloudComponentAssemblyMappingApproach</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.jclouds</groupId>
@@ -16,8 +30,8 @@
 			<artifactId>jclouds-allblobstore</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 
 </project>
