@@ -8,6 +8,9 @@ import java.util.Map;
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.Instance;
+import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
+import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
+import org.collaboration.cloudmapping.model.ahp.configuration.Goal;
 
 
 public class SimpleAHPtest {
@@ -55,7 +58,7 @@ public class SimpleAHPtest {
 		goal.setName("Find the best Cloud Provider");
 		goal.setWeight(1);
 		Criterion c1 = new Criterion("Kosten");
-		
+		goal.addChild(c1);
 		
 	}
 
