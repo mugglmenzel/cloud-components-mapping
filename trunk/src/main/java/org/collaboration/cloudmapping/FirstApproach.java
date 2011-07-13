@@ -41,7 +41,9 @@ public class FirstApproach {
 			}
 			amiInstances.put(amis.get(i), instances);
 		}
-
+		
+		System.out.println(amiInstances.toString());
+		
 		List<Instance> sortedInst = new ArrayList<Instance>();
 		StringBuilder result = new StringBuilder();
 
@@ -53,8 +55,8 @@ public class FirstApproach {
 			bestInstance = amiInstances.get(ami).get(0);
 
 			for (int i = 0; i < amiInstances.get(ami).size(); i++)
-				if (bestInstance.getPerfValue() < amiInstances.get(ami).get(i)
-						.getPerfValue())
+			//	if (bestInstance.getPerfValue() < amiInstances.get(ami).get(i)
+			//			.getPerfValue())
 					bestInstance = amiInstances.get(ami).get(i);
 
 			sortedInst.add(bestInstance);
