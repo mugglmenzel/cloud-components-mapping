@@ -59,7 +59,7 @@ public class SimpleAHPtest {
 		goal.setWeight(1);
 		Criterion c1 = new Criterion("Kosten");
 		goal.addChild(c1);
-		
+		System.out.println("decision: " + decision);
 	}
 
 }
