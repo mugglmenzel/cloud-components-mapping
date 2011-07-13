@@ -8,13 +8,13 @@ public class EC2Resource {
 	
 	Double costPerHour = 0D; //e.g. 0.12 US-Dollar 
 	
-	Double performace = 0D; //
+	Double performance = 0D; //
 
-	public EC2Resource(String name, Double costPerHour, Double performace) {
+	public EC2Resource(String name, Double costPerHour, Double performance) {
 		super();
 		this.name = name;
 		this.costPerHour = costPerHour;
-		this.performace = performace;
+		this.performance = performance;
 	}
 
 	public String getName() {
@@ -29,8 +29,8 @@ public class EC2Resource {
 
 
 
-	public Double getPerformace() {
-		return performace;
+	public Double getPerformance() {
+		return performance;
 	}
 
 	

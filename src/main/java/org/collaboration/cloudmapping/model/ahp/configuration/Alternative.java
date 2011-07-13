@@ -1,5 +1,7 @@
 package org.collaboration.cloudmapping.model.ahp.configuration;
 
+import org.collaboration.cloudmapping.model.Instance;
+
 
 /**
  * @author menzel This class of the data model represents an alternative
@@ -12,6 +14,8 @@ public class Alternative {
 
 
 	private String name;
+	
+	private Instance instance;
 
 	private String description;
 
@@ -27,6 +31,15 @@ public class Alternative {
 		this.name = name;
 	}
 
+	public Instance getInstance() {
+		return instance;
+	}
+
+	public void setInstance(Instance instance) {
+		this.instance = instance;
+	}
+	
+	
 	public Float getIndexResult() {
 		return indexResult;
 	}
