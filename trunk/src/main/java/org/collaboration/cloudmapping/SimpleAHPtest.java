@@ -58,7 +58,8 @@ public class SimpleAHPtest {
 		Goal goal = new Goal();
 		goal.setName("Find the best Components for your needs");
 		goal.setWeight(1);
-
+		decision.addGoal(goal);
+		
 		// Kriterien
 		Criterion c1 = new Criterion("Performanz");
 		Criterion c2 = new Criterion("Kosten");
