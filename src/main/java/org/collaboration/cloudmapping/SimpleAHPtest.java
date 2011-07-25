@@ -111,7 +111,9 @@ public class SimpleAHPtest {
 		try {
 			System.out.println(decision.getGoals().iterator().next()
 					.getLeafCriteria());
-			Map<Alternative, Double> results = ahp.evaluate(ev);
+			List<Evaluation> evals = new ArrayList<Evaluation>();
+			evals.add(ev);
+			Map<Alternative, Double> results = ahp.evaluate(evals);
 			System.out.println(results);
 		} catch (Exception e) {
 			e.printStackTrace();
