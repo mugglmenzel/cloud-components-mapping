@@ -147,21 +147,18 @@ public class SimpleAHPtest {
 
 			// for (int i = 0; i < 1; i++) {
 
-			Evaluation evaluation = new Evaluation();
+			List <Evaluation> evaluations = new ArrayList<Evaluation>();
+			Evaluation ev = new Evaluation();
+			ev.getEvaluations().add(createBench1Matrix(alternatives, i));
+			ev.getEvaluations().add(createBench2Matrix(alternatives, i));
+			ev.getEvaluations().add(createCostMatrix(alternatives, i));
 			
-			evaluation.getEvaluations()
-					.add(createBench1Matrix(alternatives, i));
-			evaluation.getEvaluations()
-					.add(createBench2Matrix(alternatives, i));
-			
-			
-			
+			evaluations.add(ev);
 			
 			try {
-				
 				System.out.println(decision.getGoals().iterator().next()
 						.getLeafCriteria());
-				Map<Alternative, Double> results = ahp.evaluate(evaluation);
+				Map<Alternative, Double> results = ahp.evaluate(evaluations);
 				
 				System.out.println(results);
 			} catch (Exception e) {
@@ -190,17 +187,12 @@ public class SimpleAHPtest {
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getBenchmark1();
 			for (int b = 0; b < resources.size(); b++) {
-				if (a <= b) {
-					critEv[a][b] = alt[set][b].getInstance().getBenchmark1() / c;
-
-				} else {
-					critEv[a][b] = Math.pow(critEv[a][b], (double) 1);
-				}
+				
+				critEv[a][b] = alt[set][b].getInstance().getBenchmark1() / c;
 
 			}
 
 		}
-
 		Matrix bench1Evalue = new Matrix(critEv);
 		System.out.println(bench1Evalue.toString());
 		return bench1Evalue;
@@ -209,18 +201,10 @@ public class SimpleAHPtest {
 	private static Matrix createBench2Matrix(Alternative[][] alt, int set) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
-
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getBenchmark2();
 			for (int b = 0; b < resources.size(); b++) {
-				if (a <= b) {
-					critEv[a][b] = alt[set][b].getInstance().getBenchmark2() / c;
-							
-
-				} else {
-					critEv[a][b] = Math.pow(critEv[a][b], (double) 1);
-				}
-
+				critEv[a][b] = alt[set][b].getInstance().getBenchmark2() / c;
 			}
 
 		}
@@ -236,17 +220,12 @@ public class SimpleAHPtest {
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getCostPerHour();
 			for (int b = 0; b < resources.size(); b++) {
-				if (a <= b) {
-					critEv[a][b] = c
-							/ alt[set][b].getInstance().getCostPerHour();
-
-				} else {
-					critEv[a][b] = Math.pow(critEv[a][b], (double) 1);
-				}
-
+				critEv[a][b] =alt[set][b].getInstance().getCostPerHour() / c;
 			}
 
 		}
+		Matrix costEvalue = new Matrix(critEv);
+		return costEvalue;
 	}
 
 }
