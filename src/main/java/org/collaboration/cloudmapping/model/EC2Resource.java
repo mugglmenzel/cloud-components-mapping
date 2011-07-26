@@ -2,19 +2,23 @@ package org.collaboration.cloudmapping.model;
 
 public class EC2Resource {
 	
-	//In our first algrithm approach we concentrate on the specific name of the instance, its costs and its performance.
+	//In our first algrithm approach we concentrate on the 
+	//specific name of the instance, its costs and some benchmark values.
 	
 	String name = ""; //e.g. m1.small, m1.large, m1.xlarge, 
 	
 	Double costPerHour = 0D; //e.g. 0.12 US-Dollar 
 	
-	Double performance = 0D; //
+	Double benchmark1 = 0D; //
+	
+	Double benchmark2 = 0D;
 
-	public EC2Resource(String name, Double costPerHour, Double performance) {
+	public EC2Resource(String name, Double costPerHour, Double benchmark1, Double benchmark2) {
 		super();
 		this.name = name;
 		this.costPerHour = costPerHour;
-		this.performance = performance;
+		this.benchmark1 = benchmark1;
+		this.benchmark2 = benchmark2;
 	}
 
 	public String getName() {
@@ -29,11 +33,14 @@ public class EC2Resource {
 
 
 
-	public Double getPerformance() {
-		return performance;
+	public Double getBenchmark1() {
+		return benchmark1;
 	}
 
-	
+	public Double getBenchmark2() {
+		return benchmark2;
+	}
+
 	
 	
 	/*
