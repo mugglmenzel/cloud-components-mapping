@@ -1,10 +1,8 @@
 package org.collaboration.cloudmapping;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.lang.Math;
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.Instance;
@@ -35,6 +33,7 @@ public class SimpleAHPtest {
 		resources.add(new EC2Resource("m1.small", 5D, 10D, 5D));
 		resources.add(new EC2Resource("m1.large", 10D, 12D, 18D));
 		resources.add(new EC2Resource("m1.xlarge", 12D, 32D, 25D));
+		resources.add(new EC2Resource("m1.xXXlarge", 130D, 189D, 350D));
 
 
 		/*
@@ -89,12 +88,14 @@ public class SimpleAHPtest {
 			// lets say there are two benchmarking values
 			Criterion g1c1 = new Criterion("BenchmarkValue1");
 			Criterion g1c2 = new Criterion("BenchmarkValue2");
+			Criterion g1c3 = new Criterion("costsPerHour");
 
+			
 			goal_1.addChild(g1c1);
 			goal_1.addChild(g1c2);
+			goal_1.addChild(g1c3);
 			
-			
-			
+		/*	
 			// one for costs
 			Goal goal_2 = new Goal();
 			goal_2.setName("Find the cheapest mapping for your needs");
@@ -107,7 +108,7 @@ public class SimpleAHPtest {
 			goal_2.addChild(g2c1);
 			 
 			
-			
+			*/
 			
 			// start with AHP
 
@@ -117,18 +118,19 @@ public class SimpleAHPtest {
 
 			// First we have weight our different criteria
 			// in this moment via hardcode
-			double[][] criteriaG1 = { { 1D, 1D }, { 1D , 1D } };
+			double[][] criteriaG1 = { { 1D, 1D, 1D }, { 1D , 1D, 1D }, {1D, 1D, 1D} };
 			Matrix cgoal_1 = new Matrix(criteriaG1);
 			ahp.setChildrenCriteriaWeights(goal_1, cgoal_1, 4);
 
 			// since we have only one criteria regarding goal 2 our matrix is a
 			// bit degenerated
 			
+			/*
 			double[][] criteriaG2 = { { 1 } };
 			Matrix cgoal_2 = new Matrix(criteriaG2);
 			ahp.setChildrenCriteriaWeights(goal_2, cgoal_2, 4);
 			
-			
+			*/
 			
 			//Adding alternatives
 			for (int j = 0; j < resources.size(); j++) {
@@ -189,12 +191,12 @@ public class SimpleAHPtest {
 			for (int b = 0; b < resources.size(); b++) {
 				
 				critEv[a][b] = alt[set][b].getInstance().getBenchmark1() / c;
-
+				System.out.println("[" + critEv[a][b] + "]");
 			}
-
+			System.out.println("\n");
 		}
 		Matrix bench1Evalue = new Matrix(critEv);
-		System.out.println(bench1Evalue.toString());
+		
 		return bench1Evalue;
 	}
 
@@ -220,7 +222,7 @@ public class SimpleAHPtest {
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getCostPerHour();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] =alt[set][b].getInstance().getCostPerHour() / c;
+				critEv[a][b] = 1 / (alt[set][b].getInstance().getCostPerHour() / c);
 			}
 
 		}
