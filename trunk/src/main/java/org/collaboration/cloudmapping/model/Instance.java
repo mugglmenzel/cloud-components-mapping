@@ -5,7 +5,8 @@ public class Instance {
 	final AMI ami;
 	final EC2Resource ec2;
 	final Double costPerHour; //e.g. 0.12 US-Dollar 
-	final Double performance;
+	final Double benchmark1;
+	final Double benchmark2;
 	
 	
 	
@@ -16,7 +17,8 @@ public class Instance {
 		this.ec2 = ec2;
 		//a very simple way to evaluate performance
 		this.costPerHour = this.ec2.getCostPerHour();
-		this.performance = this.ec2.getPerformance();
+		this.benchmark1 = this.ec2.getBenchmark1();
+		this.benchmark2 = this.ec2.getBenchmark2();
 	}
 
 	
@@ -25,11 +27,13 @@ public class Instance {
 	}
 
 
-	public Double getPerformance() {
-		return performance;
+	public Double getBenchmark1() {
+		return benchmark1;
 	}
 
-
+	public Double getBenchmark2() {
+		return benchmark2;
+	}
 	
 	
 	public AMI getAmi() {
@@ -43,6 +47,6 @@ public class Instance {
 	public String toString () {
 		
 		return 	"Ami: " + this.ami.getName() + "\n" + "Resource: " 
-				+ this.ec2.getName() + "\n" + "Benchmark: " + this.costPerHour / this.performance + "\n \n";
+				+ this.ec2.getName() + "\n" + "Benchmark: " + this.costPerHour / this.benchmark1 + "\n \n";
 	}
 }
