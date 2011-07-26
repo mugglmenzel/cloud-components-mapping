@@ -10,7 +10,7 @@ import org.collaboration.cloudmapping.model.Instance;
  * 
  */
 
-public class Alternative {
+public class Alternative implements Comparable<Alternative> {
 
 
 	private String name;
@@ -89,6 +89,11 @@ public class Alternative {
 		Alternative alt = new Alternative(getName());
 		alt.setDescription(getDescription());
 		return alt;
+	}
+
+	@Override
+	public int compareTo(Alternative o) {
+		return this.getName().compareTo(o.getName());
 	}
 
 }
