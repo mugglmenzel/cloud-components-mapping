@@ -1,8 +1,11 @@
 package org.collaboration.cloudmapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.Instance;
@@ -10,6 +13,7 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
 import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
 import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
 import org.collaboration.cloudmapping.model.ahp.configuration.Goal;
+import org.collaboration.cloudmapping.model.ahp.configuration.GoalType;
 import org.collaboration.cloudmapping.logic.ahp.AnalyticHierarchyProcess;
 import org.collaboration.cloudmapping.model.ahp.values.Evaluation;
 import org.collaboration.cloudmapping.model.jama.Matrix;
@@ -21,6 +25,7 @@ public class SimpleAHPtest {
 	 */
 	final static List<EC2Resource> resources = new ArrayList<EC2Resource>();
 	final static List<AMI> amis = new ArrayList<AMI>();
+	private static List<Instance> instances = new ArrayList<Instance>();
 
 	/**
 	 * @param args
@@ -62,7 +67,6 @@ public class SimpleAHPtest {
 			}
 		}
 		
-		
 		for (int i = 0; i < amis.size(); i++) {
 
 			/*
@@ -83,6 +87,7 @@ public class SimpleAHPtest {
 			Goal goal_1 = new Goal();
 			goal_1.setName("Find the most powerfull mapping");
 			goal_1.setWeight(1);
+			goal_1.setGoalType(GoalType.POSITIVE);
 			decision.addGoal(goal_1);
 
 			// lets say there are two benchmarking values
@@ -100,6 +105,7 @@ public class SimpleAHPtest {
 			Goal goal_2 = new Goal();
 			goal_2.setName("Find the cheapest mapping for your needs");
 			goal_2.setWeight(1);
+			goal_2.setGoalType(GoalType.NEGATIVE);
 			decision.addGoal(goal_2);
 
 			// costs per hour
@@ -161,8 +167,14 @@ public class SimpleAHPtest {
 				System.out.println(decision.getGoals().iterator().next()
 						.getLeafCriteria());
 				Map<Alternative, Double> results = ahp.evaluate(evaluations);
-				
+				Map<Alternative, Double> resultsSorted = new TreeMap<Alternative, Double>(results);
+				List<Double> resultsList = new ArrayList<Double>(results.values());
+				Collections.sort(resultsList);
 				System.out.println(results);
+				System.out.println(resultsList);
+				System.out.println(resultsSorted);
+				//TODO: result festhalten, richtige resource wählen!!!
+				instances.add(new Instance(amis.get(i), resources.get(0)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -190,7 +202,7 @@ public class SimpleAHPtest {
 			c = alt[set][a].getInstance().getBenchmark1();
 			for (int b = 0; b < resources.size(); b++) {
 				
-				critEv[a][b] = alt[set][b].getInstance().getBenchmark1() / c;
+				critEv[a][b] = c / alt[set][b].getInstance().getBenchmark1();
 				System.out.println("[" + critEv[a][b] + "]");
 			}
 			System.out.println("\n");
@@ -206,7 +218,7 @@ public class SimpleAHPtest {
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getBenchmark2();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = alt[set][b].getInstance().getBenchmark2() / c;
+				critEv[a][b] = c / alt[set][b].getInstance().getBenchmark2();
 			}
 
 		}
@@ -222,7 +234,7 @@ public class SimpleAHPtest {
 		for (int a = 0; a < resources.size(); a++) {
 			c = alt[set][a].getInstance().getCostPerHour();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = 1 / (alt[set][b].getInstance().getCostPerHour() / c);
+				critEv[a][b] = 1 / (c / alt[set][b].getInstance().getCostPerHour());
 			}
 
 		}
