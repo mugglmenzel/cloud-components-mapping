@@ -22,9 +22,9 @@ public class FirstApproach {
 		// add your amis and hardware components
 		amis.add(new AMI("AMI_Name_123"));
 		amis.add(new AMI("AMI_Name_234"));
-		resources.add(new EC2Resource("m1.small", 5D, 10D));
-		resources.add(new EC2Resource("m1.large", 10D, 12D));
-		resources.add(new EC2Resource("m1.xlarge", 12D, 32D));
+		resources.add(new EC2Resource("m1.small", 5D, 10D, 15D));
+		resources.add(new EC2Resource("m1.large", 10D, 12D, 20D));
+		resources.add(new EC2Resource("m1.xlarge", 12D, 32D, 35D));
 
 		// merge amis and ec2-resozrces to get all combinations (which make
 		// sense)
