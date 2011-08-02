@@ -37,9 +37,9 @@ public class SimpleAHPtest {
 		amis.add(new AMI("AMI_Name_123"));
 		amis.add(new AMI("AMI_Name_234"));
 		resources.add(new EC2Resource("m1.small", 5D, 10D, 5D));
-		resources.add(new EC2Resource("m1.large", 10D, 12D, 18D));
+		resources.add(new EC2Resource("m1.small", 10D, 12D, 18D));
 		resources.add(new EC2Resource("m1.xlarge", 12D, 32D, 25D));
-		resources.add(new EC2Resource("m1.xXXlarge", 130D, 189D, 350D));
+		
 
 
 		
@@ -184,7 +184,7 @@ public class SimpleAHPtest {
 			
 				//TODO: result festhalten, richtige resource wählen!!!
 				instances.add(sortedResults.firstKey().getInstance());
-				System.out.println("The best choice for your needs is: \n " + instances.get(i).toString());
+				System.out.println("The best choice for your needs is: \n " + sortedResults.firstEntry().getKey().toString() + "\n" + "with an absolut value of: \n" + sortedResults.firstEntry().getValue());
 				System.out.println("\n ##### END OF PROCESS ##### \n");
 				} catch (Exception e) {
 					e.printStackTrace();
