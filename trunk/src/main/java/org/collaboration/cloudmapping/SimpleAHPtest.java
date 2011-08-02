@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.collaboration.cloudmapping.model.AMI;
+import org.collaboration.cloudmapping.model.DeploymentManager;
 import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.Instance;
 import org.collaboration.cloudmapping.model.ValueComparator;
@@ -27,24 +28,27 @@ public class SimpleAHPtest {
 	final static List<EC2Resource> resources = new ArrayList<EC2Resource>();
 	final static List<AMI> amis = new ArrayList<AMI>();
 	private static List<Instance> instances = new ArrayList<Instance>();
-
+	
+	
+	final static String acceskey = "AKIAI4EZAZY4OR6YL5OA";
+	final static String secretkey = "VI+sRavW6n8AdNOEyQr1kxIb1HYb8c/pSxlvI+A1";
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
 		// add your amis and hardware components
-		amis.add(new AMI("AMI_Name_123"));
+		amis.add(new AMI("ami-27fb3f4e"));
 		amis.add(new AMI("AMI_Name_234"));
-		resources.add(new EC2Resource("m1.small", 5D, 10D, 5D));
-		resources.add(new EC2Resource("m1.small", 10D, 12D, 18D));
-		resources.add(new EC2Resource("m1.xlarge", 12D, 32D, 25D));
+		resources.add(new EC2Resource("m1.small", 5D, 30D, 50D));
+		resources.add(new EC2Resource("m1.large", 10D, 12D, 18D));
+		resources.add(new EC2Resource("m1.xlarge", 25D, 32D, 25D));
 		
 
 
 		
-		
-		for (int i = 0; i < amis.size(); i++) {
+		//TODO: change to "amis.size()"
+		for (int i = 0; i < 1; i++) {
 		
 			
 			/*
@@ -177,7 +181,7 @@ public class SimpleAHPtest {
 						.getLeafCriteria());
 				Map<Alternative, Double> results = ahp.evaluate(evaluations);
 				ValueComparator vcp = new ValueComparator(results);
-				TreeMap<Alternative, Double> sortedResults = new TreeMap(vcp);
+				TreeMap<Alternative, Double> sortedResults = new TreeMap<Alternative, Double>(vcp);
 				sortedResults.putAll(results);
 				System.out.println("\n" + results);
 				System.out.println("\n" + sortedResults + "\n");
@@ -191,19 +195,13 @@ public class SimpleAHPtest {
 				}
 			
 
-			// }
-			/*
-			 * // ...2.) der Perfomanz
-			 * 
-			 * double crit2[][] = { { 1, 12D / 10D, 32D / 10D }, { 10D / 12D, 1,
-			 * 32D / 12D }, { 10D / 32D, 12D / 32D, 1 } };
-			 * 
-			 * Matrix crit2M = new Matrix(crit2);
-			 * ev.getEvaluations().add(crit2M);
-			 */
+			
 
 		}
-
+		
+		System.out.println("Start deploying... \n");
+		DeploymentManager dpm = new DeploymentManager(instances.get(0), acceskey, secretkey);
+		dpm.deployInstance("test_01");
 	}
 
 	private static Matrix createBench1Matrix(Alternative[] alt, int set) {
