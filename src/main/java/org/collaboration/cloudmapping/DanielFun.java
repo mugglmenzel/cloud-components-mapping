@@ -1,7 +1,7 @@
 package org.collaboration.cloudmapping;
 
 import static org.jclouds.ec2.options.RunInstancesOptions.Builder.asType;
-import CloudFormationSample;
+
 
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -25,7 +25,7 @@ import org.jclouds.rest.RestContext;
 import org.jclouds.scriptbuilder.ScriptBuilder;
 
 
-import com.amazonaws.auth.PropertiesCredentials;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -43,7 +43,9 @@ public class DanielFun {
 		// Args
 		
 		String command = "destroy";
-		String name = "daniel";
+		String name = "test_01";
+		String accesskeyid = "AKIAI4EZAZY4OR6YL5OA";
+		String secretkey = "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";
 
 		// Init
 		RestContext<EC2Client, EC2AsyncClient> context = new ComputeServiceContextFactory()
