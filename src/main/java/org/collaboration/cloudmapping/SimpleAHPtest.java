@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.Instance;
+import org.collaboration.cloudmapping.model.ValueComparator;
 import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
 import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
 import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
@@ -41,34 +42,11 @@ public class SimpleAHPtest {
 		resources.add(new EC2Resource("m1.xXXlarge", 130D, 189D, 350D));
 
 
-		/*
-		 * Mapping AMIs and ec2 resources to get possible alternatives
-		 */
 		
-		Alternative[][] alternatives = new Alternative[amis.size()][resources
-				.size()];
-
-		for (int i = 0; i < amis.size(); i++) { 
-
-			for (int j = 0; j < resources.size(); j++) {
-
-				alternatives[i][j] = new Alternative();
-
-				alternatives[i][j].setInstance(new Instance(amis.get(i),
-						resources.get(j)));
-				alternatives[i][j].setDescription("AMI: "
-						+ amis.get(i).getName() + "EC2_Resource: "
-						+ resources.get(j).getName());
-				alternatives[i][j].setName(amis.get(i).getName() + "###"
-						+ resources.get(j).getName());
-
-				System.out.println(alternatives[i][j].getName());
-
-			}
-		}
 		
 		for (int i = 0; i < amis.size(); i++) {
-
+		
+			
 			/*
 			 * At first we need to define the decision we want to make.After
 			 * that we need do define goals we want to reach. This is important
@@ -82,6 +60,38 @@ public class SimpleAHPtest {
 			Decision decision = new Decision();
 			decision.setName("Optimal cloud component mapping");
 
+			
+			
+			
+			
+			
+			
+			/*
+			 * Mapping AMIs and ec2 resources to get possible alternatives
+			 */	
+			Alternative[] alternatives = new Alternative[resources.size()];
+
+				for (int j = 0; j < resources.size(); j++) {
+
+					alternatives[j] = new Alternative();
+
+					alternatives[j].setInstance(new Instance(amis.get(i),
+							resources.get(j)));
+					alternatives[j].setDescription("AMI: "
+							+ amis.get(i).getName() + "EC2_Resource: "
+							+ resources.get(j).getName());
+					alternatives[j].setName(amis.get(i).getName() + "###"
+							+ resources.get(j).getName());
+					
+					decision.addAlternative(alternatives[j]);
+					System.out.println(alternatives[j].getName());
+
+				}
+			
+				
+				
+				
+				
 			// adding goals
 			// one for performance
 			Goal goal_1 = new Goal();
@@ -93,14 +103,19 @@ public class SimpleAHPtest {
 			// lets say there are two benchmarking values
 			Criterion g1c1 = new Criterion("BenchmarkValue1");
 			Criterion g1c2 = new Criterion("BenchmarkValue2");
-			Criterion g1c3 = new Criterion("costsPerHour");
+
 
 			
 			goal_1.addChild(g1c1);
 			goal_1.addChild(g1c2);
-			goal_1.addChild(g1c3);
 			
-		/*	
+			
+		
+			
+			
+			
+			
+			
 			// one for costs
 			Goal goal_2 = new Goal();
 			goal_2.setName("Find the cheapest mapping for your needs");
@@ -114,7 +129,7 @@ public class SimpleAHPtest {
 			goal_2.addChild(g2c1);
 			 
 			
-			*/
+			
 			
 			// start with AHP
 
@@ -124,28 +139,17 @@ public class SimpleAHPtest {
 
 			// First we have weight our different criteria
 			// in this moment via hardcode
-			double[][] criteriaG1 = { { 1D, 1D, 1D }, { 1D , 1D, 1D }, {1D, 1D, 1D} };
+			double[][] criteriaG1 = { { 1D, 1D}, { 1D , 1D} };
 			Matrix cgoal_1 = new Matrix(criteriaG1);
 			ahp.setChildrenCriteriaWeights(goal_1, cgoal_1, 4);
 
 			// since we have only one criteria regarding goal 2 our matrix is a
 			// bit degenerated
 			
-			/*
+			
 			double[][] criteriaG2 = { { 1 } };
 			Matrix cgoal_2 = new Matrix(criteriaG2);
 			ahp.setChildrenCriteriaWeights(goal_2, cgoal_2, 4);
-			
-			*/
-			
-			//Adding alternatives
-			for (int j = 0; j < resources.size(); j++) {
-				
-				decision.addAlternative(alternatives[i][j]);
-				
-				System.out.println(alternatives[i][j].toString());
-			}
-			
 			
 			
 			
@@ -156,28 +160,36 @@ public class SimpleAHPtest {
 			// for (int i = 0; i < 1; i++) {
 
 			List <Evaluation> evaluations = new ArrayList<Evaluation>();
-			Evaluation ev = new Evaluation();
-			ev.getEvaluations().add(createBench1Matrix(alternatives, i));
-			ev.getEvaluations().add(createBench2Matrix(alternatives, i));
-			ev.getEvaluations().add(createCostMatrix(alternatives, i));
+			Evaluation evG1 = new Evaluation();
+			evG1.getEvaluations().add(createBench1Matrix(alternatives, i));
+			evG1.getEvaluations().add(createBench2Matrix(alternatives, i));
+			evaluations.add(evG1);
 			
-			evaluations.add(ev);
+			
+			Evaluation evG2 = new Evaluation();
+			evG2.getEvaluations().add(createCostMatrix(alternatives, i));
+			evaluations.add(evG2);
+			
 			
 			try {
+				System.out.println("\n ----results--- \n");
 				System.out.println(decision.getGoals().iterator().next()
 						.getLeafCriteria());
 				Map<Alternative, Double> results = ahp.evaluate(evaluations);
-				Map<Alternative, Double> resultsSorted = new TreeMap<Alternative, Double>(results);
-				List<Double> resultsList = new ArrayList<Double>(results.values());
-				Collections.sort(resultsList);
-				System.out.println(results);
-				System.out.println(resultsList);
-				System.out.println(resultsSorted);
+				ValueComparator vcp = new ValueComparator(results);
+				TreeMap<Alternative, Double> sortedResults = new TreeMap(vcp);
+				sortedResults.putAll(results);
+				System.out.println("\n" + results);
+				System.out.println("\n" + sortedResults + "\n");
+			
 				//TODO: result festhalten, richtige resource wählen!!!
-				instances.add(new Instance(amis.get(i), resources.get(0)));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				instances.add(sortedResults.firstKey().getInstance());
+				System.out.println("The best choice for your needs is: \n " + instances.get(i).toString());
+				System.out.println("\n ##### END OF PROCESS ##### \n");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			
 
 			// }
 			/*
@@ -194,15 +206,15 @@ public class SimpleAHPtest {
 
 	}
 
-	private static Matrix createBench1Matrix(Alternative[][] alt, int set) {
+	private static Matrix createBench1Matrix(Alternative[] alt, int set) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 
 		for (int a = 0; a < resources.size(); a++) {
-			c = alt[set][a].getInstance().getBenchmark1();
+			c = alt[a].getInstance().getBenchmark1();
 			for (int b = 0; b < resources.size(); b++) {
 				
-				critEv[a][b] = c / alt[set][b].getInstance().getBenchmark1();
+				critEv[a][b] = c / alt[b].getInstance().getBenchmark1();
 				System.out.println("[" + critEv[a][b] + "]");
 			}
 			System.out.println("\n");
@@ -212,13 +224,13 @@ public class SimpleAHPtest {
 		return bench1Evalue;
 	}
 
-	private static Matrix createBench2Matrix(Alternative[][] alt, int set) {
+	private static Matrix createBench2Matrix(Alternative[] alt, int set) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 		for (int a = 0; a < resources.size(); a++) {
-			c = alt[set][a].getInstance().getBenchmark2();
+			c = alt[a].getInstance().getBenchmark2();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = c / alt[set][b].getInstance().getBenchmark2();
+				critEv[a][b] = c / alt[b].getInstance().getBenchmark2();
 			}
 
 		}
@@ -227,14 +239,14 @@ public class SimpleAHPtest {
 		return bench2Evalue;
 	}
 
-	private static Matrix createCostMatrix(Alternative[][] alt, int set) {
+	private static Matrix createCostMatrix(Alternative[] alt, int set) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 
 		for (int a = 0; a < resources.size(); a++) {
-			c = alt[set][a].getInstance().getCostPerHour();
+			c = alt[a].getInstance().getCostPerHour();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = 1 / (c / alt[set][b].getInstance().getCostPerHour());
+				critEv[a][b] = 1 / (c / alt[b].getInstance().getCostPerHour());
 			}
 
 		}
