@@ -1,12 +1,51 @@
 package org.collaboration.cloudmapping.model.ahp.values;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.collaboration.cloudmapping.model.jama.Matrix;
 
-public class CriterionWeightsMatrix {
+/**
+ * 
+ * @author mugglmenzel
+ *
+ *         Author: Michael Menzel (mugglmenzel)
+ * 
+ *         Last Change:
+ *           
+ *           By Author: $Author: mugglmenzel $ 
+ *         
+ *           Revision: $Revision: 166 $ 
+ *         
+ *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         License:
+ *         
+ *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
+ *         of Technology
+ * 
+ *         Licensed under the Apache License, Version 2.0 (the "License"); you
+ *         may not use this file except in compliance with the License. You may
+ *         obtain a copy of the License at
+ * 
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *         Unless required by applicable law or agreed to in writing, software
+ *         distributed under the License is distributed on an "AS IS" BASIS,
+ *         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ *         implied. See the License for the specific language governing
+ *         permissions and limitations under the License.
+ * 
+ *         
+ *         SVN URL: 
+ *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/CriterionWeightsMatrix.java $
+ *
+ *
+ */
+
+public class CriterionWeightsMatrix implements Serializable {
 
 	// the order of this list must not be changed
 	private int numberOfCriteria = 1;
@@ -59,7 +98,7 @@ public class CriterionWeightsMatrix {
 
 	private void setMatrixWeights() {
 
-		for (CriterionImportance value : values) {
+		for (Importance value : values) {
 			Double val = value.getComparisonAToB();
 			if (comparison.containsKey(value.getComparisonAToB())) {
 				val = comparison.get(value.getComparisonAToB());

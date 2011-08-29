@@ -1,22 +1,53 @@
 package org.collaboration.cloudmapping.model.ahp.configuration;
 
+import java.io.Serializable;
+
 import org.collaboration.cloudmapping.model.Instance;
 
-
 /**
- * @author menzel This class of the data model represents an alternative
+ * @author mugglmenzel This class of the data model represents an alternative
  *         solution one can decide for in a deciscion. A Value that is
  *         determined for a criterion is depending on an alternative.
  * 
+ *         Author: Michael Menzel (mugglmenzel)
+ * 
+ *         Last Change:
+ *           
+ *           By Author: $Author: mugglmenzel $ 
+ *         
+ *           Revision: $Revision: 165 $ 
+ *         
+ *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         License:
+ *         
+ *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
+ *         of Technology
+ * 
+ *         Licensed under the Apache License, Version 2.0 (the "License"); you
+ *         may not use this file except in compliance with the License. You may
+ *         obtain a copy of the License at
+ * 
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *         Unless required by applicable law or agreed to in writing, software
+ *         distributed under the License is distributed on an "AS IS" BASIS,
+ *         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ *         implied. See the License for the specific language governing
+ *         permissions and limitations under the License.
+ * 
+ *         
+ *         SVN URL: 
+ *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/Alternative.java $
+ *         
  */
 
-public class Alternative implements Comparable<Alternative> {
-
+public class Alternative implements Serializable {
 
 	private String name;
-	
-	private Instance instance;
 
+	private Instance instance;
+	
 	private String description;
 
 	private Float indexResult;
@@ -31,15 +62,6 @@ public class Alternative implements Comparable<Alternative> {
 		this.name = name;
 	}
 
-	public Instance getInstance() {
-		return instance;
-	}
-
-	public void setInstance(Instance instance) {
-		this.instance = instance;
-	}
-	
-	
 	public Float getIndexResult() {
 		return indexResult;
 	}
@@ -75,8 +97,6 @@ public class Alternative implements Comparable<Alternative> {
 		return getName();
 	}
 
-
-	
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -91,9 +111,18 @@ public class Alternative implements Comparable<Alternative> {
 		return alt;
 	}
 
-	@Override
-	public int compareTo(Alternative o) {
-		return this.getName().compareTo(o.getName());
+	/**
+	 * @param instance the instance to set
+	 */
+	public void setInstance(Instance instance) {
+		this.instance = instance;
+	}
+
+	/**
+	 * @return the instance
+	 */
+	public Instance getInstance() {
+		return instance;
 	}
 
 }
