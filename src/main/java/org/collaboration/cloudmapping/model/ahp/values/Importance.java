@@ -1,11 +1,9 @@
-/**
- * 
- */
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package org.collaboration.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 
 /**
+ * 
  * @author mugglmenzel
  *
  *         Author: Michael Menzel (mugglmenzel)
@@ -14,9 +12,9 @@ import java.io.Serializable;
  *           
  *           By Author: $Author: mugglmenzel $ 
  *         
- *           Revision: $Revision: 165 $ 
+ *           Revision: $Revision: 166 $ 
  *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
  * 
  *         License:
  *         
@@ -37,31 +35,53 @@ import java.io.Serializable;
  * 
  *         
  *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/GoalType.java $
+ *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/Importance.java $
  *
  */
-public enum GoalType implements Serializable {
 
-	POSITIVE(1), NEGATIVE(-1);
-	
-	
-	int factor;
-	
-	GoalType(int i) {
-		this.setFactor(i);
-	}
+public interface Importance extends Serializable {
 
 	/**
-	 * @param factor the factor to set
+	 * @return the comparisonAToB
 	 */
-	public void setFactor(int factor) {
-		this.factor = factor;
-	}
+	public Double getComparisonAToB();
 
 	/**
-	 * @return the factor
+	 * @return the critA
 	 */
-	public int getFactor() {
-		return factor;
-	}
+	public int getCritA();
+
+	/**
+	 * @return the critB
+	 */
+	public int getCritB();
+
+	/**
+	 * @param comparisonAToB
+	 *            the comparisonAToB to set
+	 */
+	public void setComparisonAToB(Double comparisonAToB);
+
+	/**
+	 * @param critA
+	 *            the critA to set
+	 */
+	public void setCritA(int critA);
+
+	/**
+	 * @param critB
+	 *            the critB to set
+	 */
+	public void setCritB(int critB);
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment);
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment();
+
 }

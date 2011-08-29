@@ -1,5 +1,6 @@
 package org.collaboration.cloudmapping.model.ahp.configuration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,10 +15,40 @@ import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
  * @author menzel A Criterion is a node in an AHP hierarchy and also an aspect
  *         to evaluate an Alternative upon.
  * 
+ *         Author: Michael Menzel (mugglmenzel)
  * 
+ *         Last Change:
+ *           
+ *           By Author: $Author: mugglmenzel $ 
+ *         
+ *           Revision: $Revision: 165 $ 
+ *         
+ *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         License:
+ *         
+ *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
+ *         of Technology
+ * 
+ *         Licensed under the Apache License, Version 2.0 (the "License"); you
+ *         may not use this file except in compliance with the License. You may
+ *         obtain a copy of the License at
+ * 
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *         Unless required by applicable law or agreed to in writing, software
+ *         distributed under the License is distributed on an "AS IS" BASIS,
+ *         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ *         implied. See the License for the specific language governing
+ *         permissions and limitations under the License.
+ * 
+ *         
+ *         SVN URL: 
+ *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/Criterion.java $
+ *
  */
 
-public class Criterion {
+public class Criterion implements Serializable {
 
 	protected String name;
 
@@ -31,12 +62,12 @@ public class Criterion {
 
 	private Criterion parent;
 
-	protected Set<CriterionImportance> importanceChildren = new HashSet<CriterionImportance>();
-
 	protected Set<AlternativeImportance> importanceAlternatives = new HashSet<AlternativeImportance>();
 
 	protected Set<AlternativeValue> valuesAlternatives = new HashSet<AlternativeValue>();
 
+	protected Set<CriterionImportance> importanceChildren = new HashSet<CriterionImportance>();
+	
 	protected List<Criterion> children = new ArrayList<Criterion>();
 
 	public Criterion() {
@@ -94,7 +125,7 @@ public class Criterion {
 		}
 		return allDescendants;
 	}
-
+	
 	public List<Criterion> getChildren() {
 		return children;
 	}
@@ -182,7 +213,6 @@ public class Criterion {
 				: getWeight();
 	}
 
-
 	/**
 	 * @return the importanceAlternatives
 	 */
@@ -261,7 +291,6 @@ public class Criterion {
 		this.description = description;
 	}
 
-
 	/**
 	 * @param importanceAlternatives
 	 *            the importanceAlternatives to set
@@ -321,16 +350,16 @@ public class Criterion {
 				+ importanceChildren + "]";
 	}
 
-	public Double getImportanceChild(int i, int j) {
-		CriterionImportance test = new CriterionImportance(i, j, null);
+	public CriterionImportance getImportanceChild(int i, int j) {
+		CriterionImportance test = new CriterionImportance(i, j, null, null);
 		test.setParent(this);
-		System.out.println("looking for " + test + " in "
+		System.out.println("criterion looking for " + test + " in "
 				+ getImportanceChildren());
 		if (!getImportanceChildren().contains(test))
 			return null;
 		for (CriterionImportance ci : getImportanceChildren())
 			if (test.equals(ci))
-				return ci.getComparisonAToB();
+				return ci;
 		return null;
 	}
 

@@ -51,6 +51,7 @@ import org.collaboration.cloudmapping.model.jama.util.Maths;
  *         Technology.
  * @version 5 August 1998
  */
+
 public class Matrix implements Cloneable, java.io.Serializable {
 
 	/**
