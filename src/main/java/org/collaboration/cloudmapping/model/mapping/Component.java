@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model;
+package org.collaboration.cloudmapping.model.mapping;
 
 import java.util.HashSet;
 import java.util.Set;
