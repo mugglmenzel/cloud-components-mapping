@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.Component;
 import org.collaboration.cloudmapping.model.ComponentSequence;
+import org.collaboration.cloudmapping.model.mapping.Component;
 
 /**
  * @author menzel  

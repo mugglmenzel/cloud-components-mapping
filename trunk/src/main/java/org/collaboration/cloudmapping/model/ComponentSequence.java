@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.collaboration.cloudmapping.model.mapping.Component;
+
 /**
  * @author menzel
  * 
