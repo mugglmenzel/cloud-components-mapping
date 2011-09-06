@@ -141,6 +141,8 @@ public class SimpleAHPtest {
 
 			System.out.println("\n weights of criteria");
 
+			//TODO: Following in a UI -> ask user for his preferences
+			
 			// First we have weight our different criteria
 			// in this moment via hardcode
 			double[][] criteriaG1 = { { 1D, 1D}, { 1D , 1D} };
