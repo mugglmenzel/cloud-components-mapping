@@ -30,8 +30,8 @@ public class SimpleAHPtest {
 	private static List<Instance> instances = new ArrayList<Instance>();
 	
 	
-	final static String acceskey = "AKIAI4EZAZY4OR6YL5OA";
-	final static String secretkey = "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";
+	final static String acceskey = "";
+	final static String secretkey = "";
 	/**
 	 * @param args
 	 */
