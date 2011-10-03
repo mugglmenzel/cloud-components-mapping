@@ -9,6 +9,8 @@ public class Component {
 	
 	private Set<Component> requiredComponents;
 	
+	public Set<Attribute> attributes;
+	
 
 	public Component(String name) {
 		this(name, new HashSet<Component>());
