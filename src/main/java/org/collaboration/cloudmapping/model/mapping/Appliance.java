@@ -3,16 +3,44 @@
  */
 package org.collaboration.cloudmapping.model.mapping;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author mugglmenzel
- *
+ * 
  */
 public abstract class Appliance {
-	
+
 	private String name;
+	private Set<Attribute> attributes;
+	private HashMap<String,Object> hashedAttr = new HashMap<String,Object> ();
+
+	public Appliance(String name, Set<Attribute> attributes) {
+		super();
+		this.name = name;
+		this.attributes = attributes;
+	}
+
+	public HashMap<String, Object> getHashedAttr() {
+		return hashedAttr;
+	}
+
+	public void setHashedAttr(HashMap<String, Object> hashedAttr) {
+		for(Attribute a : attributes){
+			hashedAttr.put(a.getName(), a.getValue());
+		}
+	}
+	
+
+	public void setAttributes(Set<Attribute> attributes) {
+		this.attributes = attributes;
+	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -25,4 +53,11 @@ public abstract class Appliance {
 		return name;
 	}
 
+	public HashSet<Attribute> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(HashSet<Attribute> attributes) {
+		this.attributes = attributes;
+	}
 }
