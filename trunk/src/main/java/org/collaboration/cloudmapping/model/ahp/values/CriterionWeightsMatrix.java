@@ -10,19 +10,19 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
 /**
  * 
  * @author mugglmenzel
- *
+ * 
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 166 $ 
- *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 221 $
+ * 
+ *         Date: $Date: 2011-09-19 10:55:30 +0200 (Mo, 19 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -38,14 +38,21 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/CriterionWeightsMatrix.java $
- *
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/values/CriterionWeightsMatrix.java $
+ * 
+ * 
  */
 
 public class CriterionWeightsMatrix implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1488435510945771277L;
 
 	// the order of this list must not be changed
 	private int numberOfCriteria = 1;
@@ -59,7 +66,8 @@ public class CriterionWeightsMatrix implements Serializable {
 	/**
 	 * @param criteriaOrder
 	 */
-	public CriterionWeightsMatrix(Set<CriterionImportance> weights) {
+	public CriterionWeightsMatrix(int numCriteria,
+			Set<CriterionImportance> weights) {
 		super();
 		comparison.put(-9D, 1D / 10D);
 		comparison.put(-8D, 1D / 9D);
@@ -81,15 +89,21 @@ public class CriterionWeightsMatrix implements Serializable {
 		comparison.put(8D, 9D);
 		comparison.put(9D, 10D);
 
-		if (weights != null) {
+		numberOfCriteria = numCriteria;
+
+		if (weights != null && weights.size() > 0)
 			values.addAll(weights);
-			if (values.size() > 0) {
-				numberOfCriteria = values.iterator().next().getParent()
-						.getChildren().size();
-				matrix = Matrix.identity(numberOfCriteria, numberOfCriteria);
-				setMatrixWeights();
-			}
-		}
+
+		if (!(values.size() >= numberOfCriteria * (numberOfCriteria - 1) / 2))
+			for (int i = 0; i < numberOfCriteria - 1; i++)
+				for (int j = i + 1; j < numberOfCriteria; j++)
+					if (!values
+							.contains(new CriterionImportance(i, j, 0D, null)))
+						values.add(new CriterionImportance(i, j, 0D, null));
+
+		matrix = Matrix.identity(numberOfCriteria, numberOfCriteria);
+		setMatrixWeights();
+
 	}
 
 	public Matrix getMatrix() {
@@ -98,7 +112,7 @@ public class CriterionWeightsMatrix implements Serializable {
 
 	private void setMatrixWeights() {
 
-		for (Importance value : values) {
+		for (CriterionImportance value : values) {
 			Double val = value.getComparisonAToB();
 			if (comparison.containsKey(value.getComparisonAToB())) {
 				val = comparison.get(value.getComparisonAToB());

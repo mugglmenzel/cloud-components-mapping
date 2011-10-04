@@ -5,6 +5,7 @@ package org.collaboration.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 
+
 /**
  * @author mugglmenzel
  *

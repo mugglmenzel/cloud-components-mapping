@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
-import org.collaboration.cloudmapping.model.Instance;
+import org.collaboration.cloudmapping.model.mapping.Instance;
 
 public class FirstApproach {
 

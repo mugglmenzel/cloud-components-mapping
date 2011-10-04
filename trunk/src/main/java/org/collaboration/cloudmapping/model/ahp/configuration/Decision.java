@@ -2,30 +2,29 @@ package org.collaboration.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Logger;
 
 import org.collaboration.cloudmapping.model.ahp.values.GoalImportance;
 
 /**
- * @author mugglmenzel A Decision is the main class of the data model. It represents a
- *         decision itself and encapsulates multiple Goals that are pursued and
- *         multiple Alternatives that are potential solutions.
+ * @author mugglmenzel A Decision is the main class of the data model. It
+ *         represents a decision itself and encapsulates multiple Goals that are
+ *         pursued and multiple Alternatives that are potential solutions.
  * 
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 169 $ 
- *         
- *           Date: $Date: 2011-08-05 16:46:17 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel $
+ * 
+ *         Revision: $Revision: 234 $
+ * 
+ *         Date: $Date: 2011-09-21 14:59:50 +0200 (Mi, 21 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -41,13 +40,24 @@ import org.collaboration.cloudmapping.model.ahp.values.GoalImportance;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/Decision.java $
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/configuration/Decision.java $
+ * 
  */
 
 public class Decision implements Serializable, Cloneable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4411517735777225339L;
+
+	private static Logger log = Logger.getLogger(Decision.class.getName());
+
+	private Long keyId;
 
 	protected String userId;
 
@@ -59,7 +69,7 @@ public class Decision implements Serializable, Cloneable {
 
 	protected List<Goal> goals = new ArrayList<Goal>();
 
-	protected Set<GoalImportance> importanceGoals = new HashSet<GoalImportance>();
+	protected List<GoalImportance> importanceGoals = new ArrayList<GoalImportance>();
 
 	public Decision() {
 		super();
@@ -240,6 +250,20 @@ public class Decision implements Serializable, Cloneable {
 				+ getImportanceGoals();
 	}
 
+	/**
+	 * @param keyId
+	 *            the keyId to set
+	 */
+	public void setKeyId(Long keyId) {
+		this.keyId = keyId;
+	}
+
+	/**
+	 * @return the keyId
+	 */
+	public Long getKeyId() {
+		return keyId;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -262,7 +286,7 @@ public class Decision implements Serializable, Cloneable {
 	/**
 	 * @return the importanceGoals
 	 */
-	public Set<GoalImportance> getImportanceGoals() {
+	public List<GoalImportance> getImportanceGoals() {
 		return importanceGoals;
 	}
 
@@ -270,21 +294,73 @@ public class Decision implements Serializable, Cloneable {
 	 * @param importanceGoals
 	 *            the importanceGoals to set
 	 */
-	public void setImportanceGoals(Set<GoalImportance> importanceGoals) {
+	public void setImportanceGoals(List<GoalImportance> importanceGoals) {
 		this.importanceGoals = importanceGoals;
 	}
 
-	public GoalImportance getImportanceChild(int i, int j) {
+	public GoalImportance getImportanceGoal(int i, int j) {
+		log.fine("goal importance set: " + getImportanceGoals());
 		GoalImportance test = new GoalImportance(i, j, null, null);
 		test.setDecision(this);
-		System.out.println("decision looking for " + test + " in "
-				+ getImportanceGoals());
 		if (!getImportanceGoals().contains(test))
 			return null;
 		for (GoalImportance gi : getImportanceGoals())
 			if (test.equals(gi))
 				return gi;
 		return null;
+	}
+
+	public void insertImportanceGoal(GoalImportance gi) {
+		if (getImportanceGoals().contains(gi)) {
+			for (GoalImportance goali : getImportanceGoals())
+				if (goali.equals(gi)) {
+					goali.setComparisonAToB(gi.getComparisonAToB());
+					goali.setComment(gi.getComment());
+				}
+
+		} else
+			getImportanceGoals().add(gi);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Decision))
+			return false;
+		Decision other = (Decision) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
 	}
 
 }

@@ -1,6 +1,8 @@
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package org.collaboration.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
+
+import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
 
 /**
  * 
@@ -10,11 +12,11 @@ import java.io.Serializable;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 165 $ 
+ *           Revision: $Revision: 241 $ 
  *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-24 15:39:41 +0200 (Sa, 24 Sep 2011) $
  * 
  *         License:
  *         
@@ -35,17 +37,24 @@ import java.io.Serializable;
  * 
  *         
  *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/AlternativeValue.java $
+ *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/AlternativeValue.java $
  *
  */
 
 public class AlternativeValue implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2405585146889871944L;
 
 	private Criterion criterion;
 
 	private int alt;
 
 	private Double value;
+	
+	private String description;
 
 	/**
 	 * 
@@ -58,11 +67,14 @@ public class AlternativeValue implements Serializable {
 	 * @param alt
 	 * @param value
 	 */
-	public AlternativeValue(int alt, Double value) {
+	public AlternativeValue(int alt, Criterion c, Double value, String description) {
 		super();
 		this.alt = alt;
+		this.criterion = c;
 		this.value = value;
+		this.description = description;
 	}
+
 
 	/**
 	 * @return the criterion
@@ -107,6 +119,20 @@ public class AlternativeValue implements Serializable {
 	 */
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/*
@@ -155,7 +181,7 @@ public class AlternativeValue implements Serializable {
 	}
 
 	public AlternativeValue clone() {
-		return new AlternativeValue(getAlt(), getValue());
+		return new AlternativeValue(getAlt(), getCriterion(), getValue(), getDescription());
 	}
 
 }

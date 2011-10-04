@@ -1,26 +1,24 @@
 package org.collaboration.cloudmapping.model;
 
+import java.util.Set;
+
+import org.collaboration.cloudmapping.model.mapping.Appliance;
+import org.collaboration.cloudmapping.model.mapping.Attribute;
 
 
-public class AMI {
-	
-	
-	String name = ""; //e.g. BitNami Tracks Stack 1.7.3-0 EBS (Windows Server 2008.r1.sp2) 
+
+public class AMI extends Appliance {
 
 	public AMI(String name) {
-		
-		this.name = name;
+		super(name);
+	}
+
+	public AMI(String name, Set<Attribute> attributes) {
+		super(name, attributes);
 	}
 
 	
-	
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 	
 	
 	

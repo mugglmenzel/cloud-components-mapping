@@ -10,19 +10,19 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
 /**
  * 
  * @author mugglmenzel
- *
+ * 
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 166 $ 
- *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 220 $
+ * 
+ *         Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -38,16 +38,23 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/GoalWeightsMatrix.java $
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/values/GoalWeightsMatrix.java $
+ * 
  */
 
 public class GoalWeightsMatrix implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2699338070246707178L;
+
 	// the order of this list must not be changed
-	private int numberOfCriteria = 1;
+	private int numberOfGoals = 1;
 
 	private final Set<GoalImportance> values = new HashSet<GoalImportance>();
 
@@ -58,7 +65,7 @@ public class GoalWeightsMatrix implements Serializable {
 	/**
 	 * @param criteriaOrder
 	 */
-	public GoalWeightsMatrix(Set<GoalImportance> weights) {
+	public GoalWeightsMatrix(int numGoals, Set<GoalImportance> weights) {
 		super();
 		comparison.put(-9D, 1D / 10D);
 		comparison.put(-8D, 1D / 9D);
@@ -80,15 +87,20 @@ public class GoalWeightsMatrix implements Serializable {
 		comparison.put(8D, 9D);
 		comparison.put(9D, 10D);
 
-		if (weights != null) {
+		numberOfGoals = numGoals;
+
+		if (weights != null && weights.size() > 0)
 			values.addAll(weights);
-			if (values.size() > 0) {
-				numberOfCriteria = values.iterator().next().getDecision()
-						.getGoals().size();
-				matrix = Matrix.identity(numberOfCriteria, numberOfCriteria);
-				setMatrixWeights();
-			}
-		}
+
+		if (!(values.size() >= numberOfGoals * (numberOfGoals - 1) / 2))
+			for (int i = 0; i < numberOfGoals - 1; i++)
+				for (int j = i + 1; j < numberOfGoals; j++)
+					if (!values.contains(new GoalImportance(i, j, 0D, null)))
+						values.add(new GoalImportance(i, j, 0D, null));
+
+		matrix = Matrix.identity(numberOfGoals, numberOfGoals);
+		setMatrixWeights();
+
 	}
 
 	public Matrix getMatrix() {
@@ -96,23 +108,26 @@ public class GoalWeightsMatrix implements Serializable {
 	}
 
 	private void setMatrixWeights() {
-
-		for (GoalImportance value : values) {
-			Double val = value.getComparisonAToB();
-			if (comparison.containsKey(value.getComparisonAToB())) {
-				val = comparison.get(value.getComparisonAToB());
+		if (numberOfGoals > 1)
+			for (GoalImportance value : values) {
+				if (value != null) {
+					Double val = value.getComparisonAToB() != null ? value
+							.getComparisonAToB() : 0D;
+					if (comparison.containsKey(val)) {
+						val = comparison.get(val);
+					}
+					matrix.set(value.getCritA(), value.getCritB(), val);
+					if (!val.equals(0D))
+						matrix.set(value.getCritB(), value.getCritA(), 1D / val);
+				}
 			}
-			matrix.set(value.getCritA(), value.getCritB(), val);
-			if (val.doubleValue() != 0D)
-				matrix.set(value.getCritB(), value.getCritA(), 1D / val);
-		}
 
 	}
 
 	public String checkMatrix() {
 
 		// check matrix size
-		int size = numberOfCriteria;
+		int size = numberOfGoals;
 		if (matrix.getColumnDimension() != size) {
 			return "false column dimension";
 		}

@@ -14,11 +14,11 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 166 $ 
+ *           Revision: $Revision: 241 $ 
  *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-24 15:39:41 +0200 (Sa, 24 Sep 2011) $
  * 
  *         License:
  *         
@@ -43,7 +43,12 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  *
  */
 
-public class CriterionImportance implements Serializable, Importance {
+public class CriterionImportance implements Cloneable, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8980041770341071607L;
 
 	private Criterion parent;
 
@@ -109,7 +114,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#getComment()
 	 */
-	@Override
 	public String getComment() {
 		return comment;
 	}
@@ -117,7 +121,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#getComparisonAToB()
 	 */
-	@Override
 	public Double getComparisonAToB() {
 		return comparisonAToB;
 	}
@@ -125,7 +128,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#getCritA()
 	 */
-	@Override
 	public int getCritA() {
 		return critA;
 	}
@@ -133,7 +135,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#getCritB()
 	 */
-	@Override
 	public int getCritB() {
 		return critB;
 	}
@@ -164,7 +165,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#setComment(java.lang.String)
 	 */
-	@Override
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -172,7 +172,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#setComparisonAToB(java.lang.Double)
 	 */
-	@Override
 	public void setComparisonAToB(Double comparisonAToB) {
 		this.comparisonAToB = comparisonAToB;
 	}
@@ -181,7 +180,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#setCritA(int)
 	 */
-	@Override
 	public void setCritA(int critA) {
 		this.critA = critA;
 	}
@@ -189,7 +187,6 @@ public class CriterionImportance implements Serializable, Importance {
 	/* (non-Javadoc)
 	 * @see de.fzi.aotearoa.shared.model.ahp.values.Importance#setCritB(int)
 	 */
-	@Override
 	public void setCritB(int critB) {
 		this.critB = critB;
 	}

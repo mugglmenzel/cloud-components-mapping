@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.collaboration.cloudmapping.model.mapping.Instance;
 import org.jclouds.compute.ComputeServiceContextFactory;
 import org.jclouds.ec2.EC2AsyncClient;
 import org.jclouds.ec2.EC2Client;
@@ -43,8 +44,8 @@ public class DeploymentManager {
 	}
 
 	public void deployInstance(String name) {
-		String ami = this.instance.getAmi().getName();
-		String size = this.instance.getEc2().getName();
+		String ami = this.instance.getAppliance().getName();
+		String size = this.instance.getComputeResource().getName();
 		
 
 		RestContext<EC2Client, EC2AsyncClient> context = new ComputeServiceContextFactory()
