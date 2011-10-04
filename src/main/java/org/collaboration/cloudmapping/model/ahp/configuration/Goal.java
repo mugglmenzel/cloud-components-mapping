@@ -3,6 +3,7 @@ package org.collaboration.cloudmapping.model.ahp.configuration;
 import java.io.Serializable;
 
 import org.collaboration.cloudmapping.model.ahp.values.AlternativeImportance;
+import org.collaboration.cloudmapping.model.ahp.values.AlternativeValue;
 import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
 
 /**
@@ -16,11 +17,11 @@ import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 165 $ 
+ *           Revision: $Revision: 220 $ 
  *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
  *         
@@ -46,6 +47,11 @@ import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
  */
 
 public class Goal extends Criterion implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1654628294916029944L;
 
 	private Decision decision;
 
@@ -89,11 +95,16 @@ public class Goal extends Criterion implements Serializable {
 	public Goal(String name) {
 		super(name);
 	}
+	
+	public boolean hasDecision() {
+		return getDecision() != null;
+	}
 
 	public Goal clone() {
 		Goal g = new Goal(getName());
 		g.setDescription(getDescription());
 		g.setType(getType());
+		g.setGoalType(getGoalType());
 		g.setWeight(getWeight());
 		for (Criterion ch : getChildren())
 			g.addChild(ch.clone());

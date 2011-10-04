@@ -15,11 +15,11 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 166 $ 
+ *           Revision: $Revision: 220 $ 
  *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
  *         
@@ -46,6 +46,12 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
 
 public class Evaluation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1786731159904287894L;
+	
+	
 	// evaluations
 	private List<Matrix> evaluations = new ArrayList<Matrix>();
 

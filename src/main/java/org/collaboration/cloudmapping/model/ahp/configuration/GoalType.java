@@ -12,11 +12,11 @@ import java.io.Serializable;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 165 $ 
+ *           Revision: $Revision: 220 $ 
  *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
  *         

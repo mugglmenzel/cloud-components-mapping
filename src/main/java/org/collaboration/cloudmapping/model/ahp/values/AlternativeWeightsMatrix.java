@@ -1,28 +1,29 @@
 package org.collaboration.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
 import org.collaboration.cloudmapping.model.jama.Matrix;
 
 /**
  * 
  * @author mugglmenzel
- *
+ * 
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 166 $ 
- *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 244 $
+ * 
+ *         Date: $Date: 2011-09-26 02:27:36 +0200 (Mo, 26 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -38,18 +39,25 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/values/AlternativeWeightsMatrix.java $
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/values/AlternativeWeightsMatrix.java $
+ * 
  */
 
 public class AlternativeWeightsMatrix implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1861542902838232284L;
+
 	// the order of this list must not be changed
 	private int numberOfAlternatives = 1;
 
-	private final Set<AlternativeImportance> values = new HashSet<AlternativeImportance>();
+	private final List<AlternativeImportance> values = new ArrayList<AlternativeImportance>();
 
 	private Matrix matrix = Matrix.identity(1, 1);
 
@@ -58,7 +66,8 @@ public class AlternativeWeightsMatrix implements Serializable {
 	/**
 	 * @param criteriaOrder
 	 */
-	public AlternativeWeightsMatrix(Set<AlternativeImportance> weights, int alternatives) {
+	public AlternativeWeightsMatrix(int alternatives,
+			List<AlternativeImportance> weights, Criterion c) {
 		super();
 		comparison.put(-9D, 1D / 10D);
 		comparison.put(-8D, 1D / 9D);
@@ -80,14 +89,20 @@ public class AlternativeWeightsMatrix implements Serializable {
 		comparison.put(8D, 9D);
 		comparison.put(9D, 10D);
 
-		if (weights != null) {
+		numberOfAlternatives = alternatives;
+
+		if (weights != null && weights.size() > 0)
 			values.addAll(weights);
-			if (values.size() > 0) {
-				numberOfAlternatives = alternatives;
-				matrix = Matrix.identity(numberOfAlternatives, numberOfAlternatives);
-				setMatrixWeights();
-			}
-		}
+
+		if (!(values.size() >= numberOfAlternatives * (numberOfAlternatives - 1) / 2))
+			for (int i = 0; i < numberOfAlternatives - 1; i++)
+				for (int j = i + 1; j < numberOfAlternatives; j++)
+					if (!values.contains(new AlternativeImportance(i, j, c, 0D, null)))
+						values.add(new AlternativeImportance(i, j, c, 0D, null));
+		
+		matrix = Matrix.identity(numberOfAlternatives, numberOfAlternatives);
+		setMatrixWeights();
+
 	}
 
 	public Matrix getMatrix() {

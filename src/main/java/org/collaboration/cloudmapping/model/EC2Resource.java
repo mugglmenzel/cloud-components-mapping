@@ -1,44 +1,15 @@
 package org.collaboration.cloudmapping.model;
 
-public class EC2Resource {
+import org.collaboration.cloudmapping.model.mapping.ComputeService;
+
+public class EC2Resource extends ComputeService {
 	
 	//In our first algrithm approach we concentrate on the 
 	//specific name of the instance, its costs and some benchmark values.
-	
-	String name = ""; //e.g. m1.small, m1.large, m1.xlarge, 
-	
-	Double costPerHour = 0D; //e.g. 0.12 US-Dollar 
-	
-	Double benchmark1 = 0D; //
-	
-	Double benchmark2 = 0D;
-
-	public EC2Resource(String name, Double costPerHour, Double benchmark1, Double benchmark2) {
-		super();
-		this.name = name;
-		this.costPerHour = costPerHour;
-		this.benchmark1 = benchmark1;
-		this.benchmark2 = benchmark2;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	
-
-	public Double getCostPerHour() {
-		return costPerHour;
-	}
 
 
-
-	public Double getBenchmark1() {
-		return benchmark1;
-	}
-
-	public Double getBenchmark2() {
-		return benchmark2;
+	public EC2Resource(String name) {
+		super(name);
 	}
 
 	

@@ -7,36 +7,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
 import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
 import org.collaboration.cloudmapping.model.ahp.configuration.CriterionType;
 import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
 import org.collaboration.cloudmapping.model.ahp.configuration.Goal;
+import org.collaboration.cloudmapping.model.ahp.configuration.GoalType;
 import org.collaboration.cloudmapping.model.ahp.values.AlternativeEvaluation;
 import org.collaboration.cloudmapping.model.ahp.values.AlternativeValuesMatrix;
 import org.collaboration.cloudmapping.model.ahp.values.AlternativeWeightsMatrix;
+import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
 import org.collaboration.cloudmapping.model.ahp.values.CriterionWeightsMatrix;
 import org.collaboration.cloudmapping.model.ahp.values.Evaluation;
+import org.collaboration.cloudmapping.model.ahp.values.EvaluationResult;
+import org.collaboration.cloudmapping.model.ahp.values.GoalImportance;
 import org.collaboration.cloudmapping.model.ahp.values.GoalWeightsMatrix;
 import org.collaboration.cloudmapping.model.jama.Matrix;
 
 /**
  * 
  * @author mugglmenzel
- *
+ * 
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 170 $ 
- *         
- *           Date: $Date: 2011-08-05 16:48:05 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 244 $
+ * 
+ *         Date: $Date: 2011-09-26 02:27:36 +0200 (Mo, 26 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -52,10 +57,12 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/server/logic/ahp/AnalyticHierarchyProcess.java $
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/server/logic/ahp/AnalyticHierarchyProcess.java $
+ * 
  */
 
 public class AnalyticHierarchyProcess {
@@ -65,6 +72,9 @@ public class AnalyticHierarchyProcess {
 	private Decision decision;
 
 	private Set<AlternativeEvaluation> alternativeEvaluations = new HashSet<AlternativeEvaluation>();
+
+	private Logger log = Logger.getLogger(AnalyticHierarchyProcess.class
+			.getName());
 
 	/**
 	 * @return the alternativeEvaluations
@@ -76,33 +86,46 @@ public class AnalyticHierarchyProcess {
 	public AnalyticHierarchyProcess(Decision decision) {
 		super();
 		this.decision = decision;
-		System.out.println("created new AHP with decision: " + decision);
+		log.info("created new AHP with decision: " + decision);
 	}
 
-	public Map<Alternative, Double> evaluate(List<Evaluation> evaluation)
+	public EvaluationResult evaluate(List<Evaluation> evaluation)
 			throws Exception {
 		return this.evaluate(evaluation, DEFAULT_PRECISION);
 	}
 
 	// TODO: neuen Exceptiontyp einf¸hren!
-	public Map<Alternative, Double> evaluate(List<Evaluation> evals,
-			int precision) throws Exception {
+	public EvaluationResult evaluate(List<Evaluation> evals, int precision)
+			throws Exception {
+
+		log.info("---------- new evaluation ----------");
+
 		if (!sanityCheck(evals))
 			throw new Exception("Given decision model not complete.");
-		Map<Alternative, Double> alternativeMap = new HashMap<Alternative, Double>();
+
+		Map<Alternative, Double> alternativeMultiplicativeMap = new HashMap<Alternative, Double>();
+		Map<Alternative, Double> alternativeAdditiveMap = new HashMap<Alternative, Double>();
+		Map<Alternative, Double> alternativePositiveMap = new HashMap<Alternative, Double>();
+		Map<Alternative, Double> alternativeNegativeMap = new HashMap<Alternative, Double>();
 
 		// GoalWeights
-		GoalWeightsMatrix critM = new GoalWeightsMatrix(
-				decision.getImportanceGoals());
+		GoalWeightsMatrix critM = new GoalWeightsMatrix(decision.getGoals()
+				.size(), new HashSet<GoalImportance>(
+				decision.getImportanceGoals()));
 		Vector<Double> goalsWeights = calculateEigenvector(critM.getMatrix(),
 				precision);
 		if (goalsWeights.size() < decision.getGoals().size())
 			for (int i = goalsWeights.size() - 1; i < decision.getGoals()
 					.size(); i++)
 				goalsWeights.add(0D);
+		for (int i = 0; i < decision.getGoals().size(); i++)
+			decision.getGoals().get(i).setWeight(goalsWeights.get(i));
+		log.info("goals weights: " + goalsWeights);
 
 		int g = 0;
 		for (Goal goal : decision.getGoals()) {
+
+			log.info("processing goal " + goal.getName());
 
 			// ChildrenWeights
 			setChildrenCriteriaWeights(goal);
@@ -121,19 +144,24 @@ public class AnalyticHierarchyProcess {
 				for (Criterion leaf : leafCriteria) {
 					if (CriterionType.QUALITATIVE.equals(leaf.getType())) {
 						AlternativeWeightsMatrix m = new AlternativeWeightsMatrix(
-								leaf.getImportanceAlternatives(), decision
-										.getAlternatives().size());
+								decision.getAlternatives().size(),
+										leaf.getImportanceAlternatives(), leaf);
 						evaluation.getEvaluations().add(m.getMatrix());
+						log.info("created matrix for " + leaf.getName());
+						log.info(m.getMatrix().toString());
 					} else {
 						AlternativeValuesMatrix m = new AlternativeValuesMatrix(
-								leaf.getValuesAlternatives(), decision
-										.getAlternatives().size());
+								decision.getAlternatives().size(),
+								leaf.getValuesAlternatives(), leaf);
 						evaluation.getEvaluations().add(m.getMatrix());
+						log.info("created matrix for " + leaf.getName());
+						log.info(m.getMatrix().toString());
 					}
 
 				}
 			} else {
 				// TODO: check if evaluation is correct/complete - sanity
+				log.info("no health check for manual evaluations, yet");
 			}
 
 			int i = 0;
@@ -145,8 +173,9 @@ public class AnalyticHierarchyProcess {
 				if (m != null) {
 					Vector<Double> normalized = calculateEigenvector(m,
 							precision);
-					System.out.println(normalized.toString());
-					System.out.println("------");
+					log.info("normalization for criterion "
+							+ leafCriteria.get(i) + ": "
+							+ normalized.toString());
 
 					for (int j = 0; j < normalized.size(); j++)
 						getAlternativeEvaluations().add(
@@ -157,28 +186,67 @@ public class AnalyticHierarchyProcess {
 				i++;
 			}
 
-			System.out.println("evaluations for goal " + g + ": "
+			log.info("evaluations for goal " + g + ": "
 					+ getAlternativeEvaluations());
 
+			Map<Alternative, Double> alternativeGoalMap = new HashMap<Alternative, Double>();
+
 			for (AlternativeEvaluation ce : getAlternativeEvaluations()) {
-				alternativeMap
+				alternativeGoalMap
 						.put(ce.getAlternative(),
 								new Double(
-										(alternativeMap.get(ce.getAlternative()) != null ? alternativeMap
+										(alternativeGoalMap.get(ce
+												.getAlternative()) != null ? alternativeGoalMap
 												.get(ce.getAlternative())
 												.doubleValue() : 0D)
-												+ (goal.getGoalType()
-														.getFactor()
-														* goalsWeights.get(g)
-														* ce.getValue() * ce
+												+ (ce.getValue() * ce
 														.getCriterion()
 														.getGlobalWeight())));
 			}
-
+			log.info("goalMap: " + alternativeGoalMap);
+			for (Alternative a : alternativeGoalMap.keySet()) {
+				log.info("Aggregating for Alternative " + a);
+				if (goal.getGoalType().equals(GoalType.POSITIVE))
+					alternativePositiveMap
+							.put(a,
+									(alternativePositiveMap.get(a) != null ? alternativePositiveMap
+											.get(a).doubleValue() : 0D)
+											+ alternativeGoalMap.get(a));
+				else
+					alternativeNegativeMap
+							.put(a,
+									(alternativeNegativeMap.get(a) != null ? alternativeNegativeMap
+											.get(a).doubleValue() : 0D)
+											+ alternativeGoalMap.get(a));
+			}
 			g++;
 		}
 
-		return alternativeMap;
+		log.info("Positive Map " + alternativePositiveMap);
+		log.info("Negative Map " + alternativeNegativeMap);
+
+		for (Alternative a : decision.getAlternatives()) {
+			log.info("Generating Indices for Alternative " + a);
+			alternativeMultiplicativeMap
+					.put(a,
+							(alternativePositiveMap.containsKey(a) ? alternativePositiveMap
+									.get(a) : 1D)
+									/ (alternativeNegativeMap.containsKey(a) ? alternativeNegativeMap
+											.get(a) : 1D));
+
+			alternativeAdditiveMap
+					.put(a,
+							(alternativePositiveMap.containsKey(a) ? alternativePositiveMap
+									.get(a) : 0D)
+									- (alternativeNegativeMap.containsKey(a) ? alternativeNegativeMap
+											.get(a) : 0D));
+		}
+
+		log.info("---------- end evaluation ----------");
+
+		return new EvaluationResult(decision, alternativeMultiplicativeMap,
+				alternativeAdditiveMap, alternativePositiveMap,
+				alternativeNegativeMap);
 	}
 
 	/**
@@ -220,8 +288,9 @@ public class AnalyticHierarchyProcess {
 
 	public void setChildrenCriteriaWeights(Criterion parent, int precision) {
 		if (parent.hasChildren()) {
-			CriterionWeightsMatrix critM = new CriterionWeightsMatrix(
-					parent.getImportanceChildren());
+			CriterionWeightsMatrix critM = new CriterionWeightsMatrix(parent
+					.getChildren().size(), new HashSet<CriterionImportance>(
+					parent.getImportanceChildren()));
 
 			setChildrenCriteriaWeights(parent, critM.getMatrix(), precision);
 		}
@@ -242,8 +311,8 @@ public class AnalyticHierarchyProcess {
 			while (itiLeaf.hasNext()) {
 				Criterion leafCriterion = itiLeaf.next();
 				leafCriterion.setWeight(criteriaWeights.get(i));
-				System.out.println(leafCriterion.getName() + ": local = "
-						+ leafCriterion.getWeight() + ", global = "
+				log.info(leafCriterion.getName() + ": local weight = "
+						+ leafCriterion.getWeight() + ", global weight = "
 						+ leafCriterion.getGlobalWeight());
 				i++;
 			}

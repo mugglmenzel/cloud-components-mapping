@@ -12,11 +12,11 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 166 $ 
+ *           Revision: $Revision: 241 $ 
  *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-24 15:39:41 +0200 (Sa, 24 Sep 2011) $
  * 
  *         License:
  *         
@@ -41,8 +41,12 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  *
  */
 
+public class AlternativeImportance implements Cloneable, Serializable {
 
-public class AlternativeImportance implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8084248328316108208L;
 
 	private Criterion criterion;
 
@@ -51,6 +55,8 @@ public class AlternativeImportance implements Serializable {
 	private int altB;
 
 	private Double comparisonAToB;
+	
+	private String description;
 
 	/**
 	 * 
@@ -65,11 +71,13 @@ public class AlternativeImportance implements Serializable {
 	 * @param altB
 	 * @param comparisonAToB
 	 */
-	public AlternativeImportance(int altA, int altB, Double comparisonAToB) {
+	public AlternativeImportance(int altA, int altB, Criterion c, Double comparisonAToB, String description) {
 		super();
 		this.altA = altA;
 		this.altB = altB;
+		this.criterion = c;
 		this.comparisonAToB = comparisonAToB;
+		this.description = description;
 	}
 
 
@@ -125,6 +133,20 @@ public class AlternativeImportance implements Serializable {
 	}
 
 	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
 	 * @param criterion
 	 *            the criterion to set
 	 */
@@ -140,8 +162,46 @@ public class AlternativeImportance implements Serializable {
 	}
 
 	public AlternativeImportance clone() {
-		return new AlternativeImportance(getAltA(), getAltB(),
-				getComparisonAToB());
+		return new AlternativeImportance(getAltA(), getAltB(), getCriterion(),
+				getComparisonAToB(), getDescription());
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + altA;
+		result = prime * result + altB;
+		result = prime * result
+				+ ((criterion == null) ? 0 : criterion.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AlternativeImportance other = (AlternativeImportance) obj;
+		if (altA != other.altA)
+			return false;
+		if (altB != other.altB)
+			return false;
+		if (criterion == null) {
+			if (other.criterion != null)
+				return false;
+		} else if (!criterion.equals(other.criterion))
+			return false;
+		return true;
 	}
 
 }

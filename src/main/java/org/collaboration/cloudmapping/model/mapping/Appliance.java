@@ -14,9 +14,14 @@ import java.util.Set;
 public abstract class Appliance {
 
 	private String name;
-	private Set<Attribute> attributes;
+	private Set<Attribute> attributes = new HashSet<Attribute>();
 	private HashMap<String,Object> hashedAttr = new HashMap<String,Object> ();
 
+	public Appliance(String name) {
+		super();
+		this.name = name;
+	}
+	
 	public Appliance(String name, Set<Attribute> attributes) {
 		super();
 		this.name = name;
@@ -53,11 +58,13 @@ public abstract class Appliance {
 		return name;
 	}
 
-	public HashSet<Attribute> getAttributes() {
+	/**
+	 * @return the attributes
+	 */
+	public Set<Attribute> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(HashSet<Attribute> attributes) {
-		this.attributes = attributes;
-	}
+	
+	
 }

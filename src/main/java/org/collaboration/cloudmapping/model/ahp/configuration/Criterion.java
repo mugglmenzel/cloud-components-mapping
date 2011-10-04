@@ -2,12 +2,11 @@ package org.collaboration.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.collaboration.cloudmapping.model.ahp.values.AlternativeImportance;
+import org.collaboration.cloudmapping.model.ahp.values.AlternativeValue;
 import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
 
 /**
@@ -18,15 +17,15 @@ import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel $ 
- *         
- *           Revision: $Revision: 165 $ 
- *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 242 $
+ * 
+ *         Date: $Date: 2011-09-25 17:48:24 +0200 (So, 25 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -42,18 +41,27 @@ import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/Criterion.java $
- *
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/configuration/Criterion.java $
+ * 
  */
 
 public class Criterion implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 949425245049027952L;
 
 	protected String name;
 
 	protected String description;
 	
+	protected String metric;
+
 	protected String url;
 
 	protected CriterionType type;
@@ -62,12 +70,14 @@ public class Criterion implements Serializable {
 
 	private Criterion parent;
 
-	protected Set<AlternativeImportance> importanceAlternatives = new HashSet<AlternativeImportance>();
+	// qualitative
+	protected List<AlternativeImportance> importanceAlternatives = new ArrayList<AlternativeImportance>();
 
-	protected Set<AlternativeValue> valuesAlternatives = new HashSet<AlternativeValue>();
+	// quantitative
+	protected List<AlternativeValue> valuesAlternatives = new ArrayList<AlternativeValue>();
 
-	protected Set<CriterionImportance> importanceChildren = new HashSet<CriterionImportance>();
-	
+	protected List<CriterionImportance> importanceChildren = new ArrayList<CriterionImportance>();
+
 	protected List<Criterion> children = new ArrayList<Criterion>();
 
 	public Criterion() {
@@ -125,7 +135,7 @@ public class Criterion implements Serializable {
 		}
 		return allDescendants;
 	}
-	
+
 	public List<Criterion> getChildren() {
 		return children;
 	}
@@ -188,7 +198,7 @@ public class Criterion implements Serializable {
 
 		return null;
 	}
-	
+
 	public Criterion getParentCriterion(String criterionName) {
 		Iterator<Criterion> iti = this.getChildren().iterator();
 		Criterion help = null;
@@ -216,14 +226,14 @@ public class Criterion implements Serializable {
 	/**
 	 * @return the importanceAlternatives
 	 */
-	public Set<AlternativeImportance> getImportanceAlternatives() {
+	public List<AlternativeImportance> getImportanceAlternatives() {
 		return importanceAlternatives;
 	}
 
 	/**
 	 * @return the importanceChildren
 	 */
-	public Set<CriterionImportance> getImportanceChildren() {
+	public List<CriterionImportance> getImportanceChildren() {
 		return importanceChildren;
 	}
 
@@ -263,7 +273,7 @@ public class Criterion implements Serializable {
 	/**
 	 * @return the valuesAlternatives
 	 */
-	public Set<AlternativeValue> getValuesAlternatives() {
+	public List<AlternativeValue> getValuesAlternatives() {
 		return valuesAlternatives;
 	}
 
@@ -296,8 +306,19 @@ public class Criterion implements Serializable {
 	 *            the importanceAlternatives to set
 	 */
 	public void setImportanceAlternatives(
-			Set<AlternativeImportance> importanceAlternatives) {
+			List<AlternativeImportance> importanceAlternatives) {
 		this.importanceAlternatives = importanceAlternatives;
+	}
+
+	public void insertImportanceAlternative(AlternativeImportance ai) {
+		if (getImportanceAlternatives().contains(ai)) {
+			for (AlternativeImportance alti : getImportanceAlternatives())
+				if (alti.equals(ai)) {
+					alti.setComparisonAToB(ai.getComparisonAToB());
+					alti.setDescription(ai.getDescription());
+				}
+		} else
+			getImportanceAlternatives().add(ai);
 	}
 
 	/**
@@ -305,8 +326,19 @@ public class Criterion implements Serializable {
 	 *            the importanceChildren to set
 	 */
 	public void setImportanceChildren(
-			Set<CriterionImportance> importanceChildren) {
+			List<CriterionImportance> importanceChildren) {
 		this.importanceChildren = importanceChildren;
+	}
+
+	public void insertImportanceChild(CriterionImportance ci) {
+		if (getImportanceChildren().contains(ci)) {
+			for (CriterionImportance impi : getImportanceChildren())
+				if (impi.equals(ci)) {
+					impi.setComparisonAToB(ci.getComparisonAToB());
+					impi.setComment(ci.getComment());
+				}
+		} else
+			getImportanceChildren().add(ci);
 	}
 
 	public void setName(String name) {
@@ -329,8 +361,19 @@ public class Criterion implements Serializable {
 	 * @param valuesAlternatives
 	 *            the valuesAlternatives to set
 	 */
-	public void setValuesAlternatives(Set<AlternativeValue> valuesAlternatives) {
+	public void setValuesAlternatives(List<AlternativeValue> valuesAlternatives) {
 		this.valuesAlternatives = valuesAlternatives;
+	}
+
+	public void insertValueAlternative(AlternativeValue av) {
+		if (getValuesAlternatives().contains(av)) {
+			for (AlternativeValue alti : getValuesAlternatives())
+				if (alti.equals(av)) {
+					alti.setValue(av.getValue());
+					alti.setDescription(av.getDescription());
+				}
+		} else
+			getValuesAlternatives().add(av);
 	}
 
 	public void setWeight(double weight) {
@@ -353,8 +396,6 @@ public class Criterion implements Serializable {
 	public CriterionImportance getImportanceChild(int i, int j) {
 		CriterionImportance test = new CriterionImportance(i, j, null, null);
 		test.setParent(this);
-		System.out.println("criterion looking for " + test + " in "
-				+ getImportanceChildren());
 		if (!getImportanceChildren().contains(test))
 			return null;
 		for (CriterionImportance ci : getImportanceChildren())
@@ -363,25 +404,25 @@ public class Criterion implements Serializable {
 		return null;
 	}
 
-	public Double getImportanceAlternative(int i, int j) {
-		AlternativeImportance test = new AlternativeImportance(i, j, null);
-		test.setCriterion(this);
+	public AlternativeImportance getImportanceAlternative(int i, int j) {
+		AlternativeImportance test = new AlternativeImportance(i, j, this,
+				null, null);
 		if (!getImportanceAlternatives().contains(test))
 			return null;
 		for (AlternativeImportance ci : getImportanceAlternatives())
 			if (test.equals(ci))
-				return ci.getComparisonAToB();
+				return ci;
 		return null;
 	}
 
-	public Double getValueAlternative(int i) {
-		AlternativeValue test = new AlternativeValue(i, null);
+	public AlternativeValue getValueAlternative(int i) {
+		AlternativeValue test = new AlternativeValue(i, this, null, null);
 		test.setCriterion(this);
 		if (!getValuesAlternatives().contains(test))
 			return null;
 		for (AlternativeValue av : getValuesAlternatives())
 			if (test.equals(av))
-				return av.getValue();
+				return av;
 		return null;
 	}
 
@@ -400,6 +441,75 @@ public class Criterion implements Serializable {
 			c.getValuesAlternatives().add(av.clone());
 
 		return c;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Criterion other = (Criterion) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (parent == null) {
+			if (other.parent != null)
+				return false;
+		} else if (!parent.equals(other.parent))
+			return false;
+		return true;
+	}
+
+	/**
+	 * @return the metric
+	 */
+	public String getMetric() {
+		return metric;
+	}
+
+	/**
+	 * @param metric the metric to set
+	 */
+	public void setMetric(String metric) {
+		this.metric = metric;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

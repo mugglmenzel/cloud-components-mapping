@@ -2,8 +2,6 @@ package org.collaboration.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 
-import org.collaboration.cloudmapping.model.Instance;
-
 /**
  * @author mugglmenzel This class of the data model represents an alternative
  *         solution one can decide for in a deciscion. A Value that is
@@ -13,11 +11,11 @@ import org.collaboration.cloudmapping.model.Instance;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 165 $ 
+ *           Revision: $Revision: 220 $ 
  *         
- *           Date: $Date: 2011-08-05 15:45:22 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
  *         
@@ -44,13 +42,14 @@ import org.collaboration.cloudmapping.model.Instance;
 
 public class Alternative implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3016699896490202374L;
+
 	private String name;
 
-	private Instance instance;
-	
 	private String description;
-
-	private Float indexResult;
 
 	private Decision decision;
 
@@ -60,14 +59,6 @@ public class Alternative implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Float getIndexResult() {
-		return indexResult;
-	}
-
-	public void setIndexResult(Float indexResult) {
-		this.indexResult = indexResult;
 	}
 
 	public Decision getDecision() {
@@ -111,18 +102,44 @@ public class Alternative implements Serializable {
 		return alt;
 	}
 
-	/**
-	 * @param instance the instance to set
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
-	public void setInstance(Instance instance) {
-		this.instance = instance;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((decision == null) ? 0 : decision.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
-	/**
-	 * @return the instance
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public Instance getInstance() {
-		return instance;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Alternative))
+			return false;
+		Alternative other = (Alternative) obj;
+		if (decision == null) {
+			if (other.decision != null)
+				return false;
+		} else if (!decision.equals(other.decision))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
+	
+	
 }

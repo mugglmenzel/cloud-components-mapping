@@ -13,11 +13,11 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  * 
  *         Last Change:
  *           
- *           By Author: $Author: mugglmenzel $ 
+ *           By Author: $Author: mugglmenzel@gmail.com $ 
  *         
- *           Revision: $Revision: 166 $ 
+ *           Revision: $Revision: 220 $ 
  *         
- *           Date: $Date: 2011-08-05 15:49:44 +0200 (Fr, 05 Aug 2011) $
+ *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
  *         
@@ -43,6 +43,11 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
  */
 
 public class AlternativeEvaluation implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7866386142825158814L;
 
 	private Criterion criterion;
 	
