@@ -11,15 +11,21 @@ import org.collaboration.cloudmapping.model.EC2Resource;
 import org.collaboration.cloudmapping.model.ValueComparator;
 import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
 import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
-import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
 import org.collaboration.cloudmapping.model.ahp.configuration.Goal;
 import org.collaboration.cloudmapping.model.ahp.configuration.GoalType;
 import org.collaboration.cloudmapping.model.ahp.values.Evaluation;
 import org.collaboration.cloudmapping.model.ahp.values.EvaluationResult;
 import org.collaboration.cloudmapping.model.jama.Matrix;
+import org.collaboration.cloudmapping.model.mapping.Appliance;
+import org.collaboration.cloudmapping.model.mapping.Attribute;
+import org.collaboration.cloudmapping.model.mapping.ComputeService;
 import org.collaboration.cloudmapping.model.mapping.EAttribute;
 import org.collaboration.cloudmapping.model.mapping.Instance;
 import org.collaboration.cloudmapping.model.mapping.InstanceAlternative;
+import org.collaboration.cloudmapping.model.mapping.InstanceDecision;
+import org.collaboration.cloudmapping.model.mapping.requirements.MaxRequirement;
+import org.collaboration.cloudmapping.model.mapping.requirements.MinRequirement;
+import org.collaboration.cloudmapping.model.mapping.requirements.RequirementItem;
 
 public class CloudComponentMapper {
 
@@ -42,20 +48,25 @@ public class CloudComponentMapper {
 		amis.add(new AMI("ami-27fb3f4e"));
 		amis.add(new AMI("AMI_Name_234"));
 		EC2Resource ec1 = new EC2Resource("m1.small");
-		ec1.getAttributes().put(EAttribute.COSTPERHOUR, 5D);
-		ec1.getAttributes().put(EAttribute.BENCHMARK, 30D);
+		ec1.getAttributes().add(
+				new Attribute<Double>(EAttribute.COSTPERHOUR, 5D));
+		ec1.getAttributes().add(
+				new Attribute<Double>(EAttribute.BENCHMARK, 30D));
 		EC2Resource ec2 = new EC2Resource("m1.large");
-		ec2.getAttributes().put(EAttribute.COSTPERHOUR, 10D);
-		ec2.getAttributes().put(EAttribute.BENCHMARK, 12D);
+		ec2.getAttributes().add(
+				new Attribute<Double>(EAttribute.COSTPERHOUR, 10D));
+		ec2.getAttributes().add(
+				new Attribute<Double>(EAttribute.BENCHMARK, 12D));
 		EC2Resource ec3 = new EC2Resource("m1.xlarge");
-		ec3.getAttributes().put(EAttribute.COSTPERHOUR, 25D);
-		ec3.getAttributes().put(EAttribute.BENCHMARK, 32D);
+		ec3.getAttributes().add(
+				new Attribute<Double>(EAttribute.COSTPERHOUR, 25D));
+		ec3.getAttributes().add(
+				new Attribute<Double>(EAttribute.BENCHMARK, 32D));
 		resources.add(ec1);
 		resources.add(ec2);
 		resources.add(ec3);
 
-		// TODO: change to "amis.size()"
-		for (int i = 0; i < 1; i++) {
+		for (Appliance ami : amis) {
 
 			/*
 			 * At first we need to define the decision we want to make.After
@@ -64,26 +75,33 @@ public class CloudComponentMapper {
 			 * and performance
 			 */
 
-			Decision decision = new Decision();
+			InstanceDecision decision = new InstanceDecision();
 			decision.setName("Optimal cloud component mapping");
+
+			decision.getFctRequirements().add(
+					new MinRequirement<Double>("Min Benchmark Result",
+							EAttribute.BENCHMARK, new RequirementItem<Double>(
+									15D)));
+			decision.getFctRequirements().add(
+					new MaxRequirement<Double>("Max Costs",
+							EAttribute.COSTPERHOUR,
+							new RequirementItem<Double>(20D)));
 
 			/*
 			 * Mapping AMIs and ec2 resources to get possible alternatives
 			 */
-			InstanceAlternative[] alternatives = new InstanceAlternative[resources
-					.size()];
 
-			for (int j = 0; j < resources.size(); j++) {
+			for (ComputeService resource : resources) {
 
-				alternatives[j] = new InstanceAlternative(new Instance(amis.get(i), resources.get(j)), new Integer(j).toString());
+				InstanceAlternative alternative = new InstanceAlternative(
+						new Instance(ami, resource), ami.getName() + "->"
+								+ resource.getName());
 
-				alternatives[j].setDescription("AMI: " + amis.get(i).getName()
-						+ "EC2_Resource: " + resources.get(j).getName());
-				alternatives[j].setName(amis.get(i).getName() + "###"
-						+ resources.get(j).getName());
+				alternative.setDescription("AMI: " + ami.getName()
+						+ "EC2_Resource: " + resource.getName());
 
-				decision.addAlternative(alternatives[j]);
-				System.out.println(alternatives[j].getName());
+				decision.addAlternative(alternative);
+				System.out.println(alternative.getName());
 
 			}
 
@@ -113,6 +131,9 @@ public class CloudComponentMapper {
 			Criterion g2c1 = new Criterion("costsPerHour");
 
 			goal_2.addChild(g2c1);
+
+			decision.reqCheck();
+			System.out.println("req check:" + decision.isValidMapping());
 
 			// start with AHP
 
@@ -144,12 +165,12 @@ public class CloudComponentMapper {
 
 			List<Evaluation> evaluations = new ArrayList<Evaluation>();
 			Evaluation evG1 = new Evaluation();
-			evG1.getEvaluations().add(createBench1Matrix(alternatives, i));
-			evG1.getEvaluations().add(createBench2Matrix(alternatives, i));
+			evG1.getEvaluations().add(createBench1Matrix(decision.getInstanceAlternatives()));
+			evG1.getEvaluations().add(createBench2Matrix(decision.getInstanceAlternatives()));
 			evaluations.add(evG1);
 
 			Evaluation evG2 = new Evaluation();
-			evG2.getEvaluations().add(createCostMatrix(alternatives, i));
+			evG2.getEvaluations().add(createCostMatrix(decision.getInstanceAlternatives()));
 			evaluations.add(evG2);
 
 			try {
@@ -166,7 +187,8 @@ public class CloudComponentMapper {
 				System.out.println("\n" + sortedResults + "\n");
 
 				// TODO: result festhalten, richtige resource wählen!!!
-				instances.add(((InstanceAlternative) sortedResults.firstKey()).getInstance());
+				instances.add(((InstanceAlternative) sortedResults.firstKey())
+						.getInstance());
 				System.out.println("The best choice for your needs is: \n "
 						+ sortedResults.firstEntry().getKey().toString() + "\n"
 						+ "with an absolut value of: \n"
@@ -184,15 +206,18 @@ public class CloudComponentMapper {
 		dpm.deployInstance("test_01");
 	}
 
-	private static Matrix createBench1Matrix(InstanceAlternative[] alt, int set) {
+	private static Matrix createBench1Matrix(List<InstanceAlternative> alt) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 
 		for (int a = 0; a < resources.size(); a++) {
-			c = (Double) alt[a].getInstance().getComputeResource().getAttributes().get(EAttribute.BENCHMARK);
+			c = (Double) alt.get(a).getInstance().getComputeService()
+					.getAttribute(EAttribute.BENCHMARK).getValue();
 			for (int b = 0; b < resources.size(); b++) {
 
-				critEv[a][b] = c / (Double) alt[b].getInstance().getComputeResource().getAttributes().get(EAttribute.BENCHMARK);
+				critEv[a][b] = c
+						/ (Double) alt.get(b).getInstance().getComputeService()
+								.getAttribute(EAttribute.BENCHMARK).getValue();
 				System.out.println("[" + critEv[a][b] + "]");
 			}
 			System.out.println("\n");
@@ -202,13 +227,16 @@ public class CloudComponentMapper {
 		return bench1Evalue;
 	}
 
-	private static Matrix createBench2Matrix(InstanceAlternative[] alt, int set) {
+	private static Matrix createBench2Matrix(List<InstanceAlternative> alt) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 		for (int a = 0; a < resources.size(); a++) {
-			c = (Double) alt[a].getInstance().getComputeResource().getAttributes().get(EAttribute.BENCHMARK);
+			c = (Double) alt.get(a).getInstance().getComputeService()
+					.getAttribute(EAttribute.BENCHMARK).getValue();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = c / (Double) alt[b].getInstance().getComputeResource().getAttributes().get(EAttribute.BENCHMARK);
+				critEv[a][b] = c
+						/ (Double) alt.get(b).getInstance().getComputeService()
+								.getAttribute(EAttribute.BENCHMARK).getValue();
 			}
 
 		}
@@ -217,14 +245,18 @@ public class CloudComponentMapper {
 		return bench2Evalue;
 	}
 
-	private static Matrix createCostMatrix(InstanceAlternative[] alt, int set) {
+	private static Matrix createCostMatrix(List<InstanceAlternative> alt) {
 		double[][] critEv = new double[resources.size()][resources.size()];
 		double c;
 
 		for (int a = 0; a < resources.size(); a++) {
-			c = (Double) alt[a].getInstance().getComputeResource().getAttributes().get(EAttribute.COSTPERHOUR);
+			c = (Double) alt.get(a).getInstance().getComputeService()
+					.getAttribute(EAttribute.COSTPERHOUR).getValue();
 			for (int b = 0; b < resources.size(); b++) {
-				critEv[a][b] = 1 / (c / (Double) alt[b].getInstance().getComputeResource().getAttributes().get(EAttribute.COSTPERHOUR));
+				critEv[a][b] = c
+						/ (Double) alt.get(b).getInstance().getComputeService()
+								.getAttribute(EAttribute.COSTPERHOUR)
+								.getValue();
 			}
 
 		}

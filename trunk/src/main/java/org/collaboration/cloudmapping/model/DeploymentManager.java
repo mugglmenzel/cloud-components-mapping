@@ -45,7 +45,7 @@ public class DeploymentManager {
 
 	public void deployInstance(String name) {
 		String ami = this.instance.getAppliance().getName();
-		String size = this.instance.getComputeResource().getName();
+		String size = this.instance.getComputeService().getName();
 		
 
 		RestContext<EC2Client, EC2AsyncClient> context = new ComputeServiceContextFactory()

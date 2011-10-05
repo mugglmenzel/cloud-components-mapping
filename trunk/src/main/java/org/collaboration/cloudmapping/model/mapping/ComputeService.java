@@ -1,14 +1,15 @@
 package org.collaboration.cloudmapping.model.mapping;
 
-import java.util.HashMap;
-import java.util.Map;
 
-public class ComputeService {
+public abstract class ComputeService extends AbstractAttributedItem {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5770949839975306149L;
 
 	private String name;
-	
-	private Map<EAttribute, Object> attributes = new HashMap<EAttribute, Object>();
-	
+
 	/**
 	 * @param name
 	 */
@@ -18,7 +19,8 @@ public class ComputeService {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -30,20 +32,9 @@ public class ComputeService {
 	public String getName() {
 		return name;
 	}
-
-	/**
-	 * @param attributes the attributes to set
-	 */
-	public void setAttributes(Map<EAttribute, Object> attributes) {
-		this.attributes = attributes;
+	
+	public String toString() {
+		return getName();
 	}
 
-	/**
-	 * @return the attributes
-	 */
-	public Map<EAttribute, Object> getAttributes() {
-		return attributes;
-	}
-	
-	
 }
