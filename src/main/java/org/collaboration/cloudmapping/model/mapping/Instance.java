@@ -5,7 +5,7 @@ public class Instance {
 
 	private Appliance appliance;
 
-	private ComputeService computeResource;
+	private ComputeService computeService;
 
 
 	/**
@@ -15,7 +15,7 @@ public class Instance {
 	public Instance(Appliance appliance, ComputeService computeResource) {
 		super();
 		this.appliance = appliance;
-		this.computeResource = computeResource;
+		this.computeService = computeResource;
 	}
 
 
@@ -41,8 +41,8 @@ public class Instance {
 	/**
 	 * @return the computeResource
 	 */
-	public ComputeService getComputeResource() {
-		return computeResource;
+	public ComputeService getComputeService() {
+		return computeService;
 	}
 
 
@@ -50,8 +50,8 @@ public class Instance {
 	/**
 	 * @param computeResource the computeResource to set
 	 */
-	public void setComputeResource(ComputeService computeResource) {
-		this.computeResource = computeResource;
+	public void setComputeService(ComputeService computeResource) {
+		this.computeService = computeResource;
 	}
 
 
@@ -59,6 +59,6 @@ public class Instance {
 	public String toString() {
 
 		return "Appliance: " + this.appliance.getName() + "\n" + "Resource: "
-				+ this.computeResource.getName() + "\n \n";
+				+ this.computeService.getName() + "\n \n";
 	}
 }

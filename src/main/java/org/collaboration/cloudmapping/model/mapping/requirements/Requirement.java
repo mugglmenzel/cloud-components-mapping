@@ -16,7 +16,7 @@ public abstract class Requirement<T> implements Serializable {
 	
 	private RequirementType reqType;
 	
-	private EAttribute attribute;
+	private EAttribute attributeName;
 	
 	private IRequirementItem<T> value;
 	
@@ -27,7 +27,7 @@ public abstract class Requirement<T> implements Serializable {
 		super();
 		this.name = name;
 		this.reqType = reqType;
-		this.attribute = attribute;
+		this.attributeName = attribute;
 		this.value = value;
 	}
 	
@@ -35,7 +35,7 @@ public abstract class Requirement<T> implements Serializable {
 		super();
 		this.name = name;
 		this.reqType = reqType;
-		this.attribute = attribute;
+		this.attributeName = attribute;
 		this.setValues(values);
 	}
 	
@@ -66,16 +66,16 @@ public abstract class Requirement<T> implements Serializable {
 	/**
 	 * @return the attribute
 	 */
-	public EAttribute getAttribute() {
-		return attribute;
+	public EAttribute getAttributeName() {
+		return attributeName;
 	}
 
 
 	/**
 	 * @param attribute the attribute to set
 	 */
-	public void setAttribute(EAttribute attribute) {
-		this.attribute = attribute;
+	public void setAttributeName(EAttribute attribute) {
+		this.attributeName = attribute;
 	}
 
 

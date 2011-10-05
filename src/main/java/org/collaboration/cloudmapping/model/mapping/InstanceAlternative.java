@@ -11,6 +11,11 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
  */
 public class InstanceAlternative extends Alternative {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2480586708835376560L;
+	
 	private Instance instance;
 	
 	public InstanceAlternative(Instance instance, String name) {

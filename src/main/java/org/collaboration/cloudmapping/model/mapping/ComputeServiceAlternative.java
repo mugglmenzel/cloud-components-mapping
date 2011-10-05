@@ -7,29 +7,35 @@ import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
 
 /**
  * @author mugglmenzel
- *
+ * 
  */
 public class ComputeServiceAlternative extends Alternative {
 
-	private ComputeService cs;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6431007114719302435L;
 	
+	private ComputeService computeService;
+
 	public ComputeServiceAlternative(ComputeService cs, String name) {
-		this.setCs(cs);
+		setComputeService(cs);
 		setName(name);
 	}
 
 	/**
-	 * @param cs the cs to set
+	 * @return the computeService
 	 */
-	public void setCs(ComputeService cs) {
-		this.cs = cs;
+	public ComputeService getComputeService() {
+		return computeService;
 	}
 
 	/**
-	 * @return the cs
+	 * @param computeService
+	 *            the computeService to set
 	 */
-	public ComputeService getCs() {
-		return cs;
+	public void setComputeService(ComputeService computeService) {
+		this.computeService = computeService;
 	}
-	
+
 }
