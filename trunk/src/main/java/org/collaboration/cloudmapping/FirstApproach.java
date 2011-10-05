@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.collaboration.cloudmapping.model.AMI;
 import org.collaboration.cloudmapping.model.EC2Resource;
+import org.collaboration.cloudmapping.model.mapping.EAttribute;
 import org.collaboration.cloudmapping.model.mapping.Instance;
 
 public class FirstApproach {
@@ -22,10 +23,18 @@ public class FirstApproach {
 		// add your amis and hardware components
 		amis.add(new AMI("AMI_Name_123"));
 		amis.add(new AMI("AMI_Name_234"));
-		resources.add(new EC2Resource("m1.small", 5D, 10D, 15D));
-		resources.add(new EC2Resource("m1.large", 10D, 12D, 20D));
-		resources.add(new EC2Resource("m1.xlarge", 12D, 32D, 35D));
-
+		EC2Resource ec1 = new EC2Resource("m1.small");
+		ec1.getAttributes().put(EAttribute.COSTPERHOUR, 5D);
+		ec1.getAttributes().put(EAttribute.BENCHMARK, 30D);
+		EC2Resource ec2 = new EC2Resource("m1.large");
+		ec2.getAttributes().put(EAttribute.COSTPERHOUR, 10D);
+		ec2.getAttributes().put(EAttribute.BENCHMARK, 12D);
+		EC2Resource ec3 = new EC2Resource("m1.xlarge");
+		ec3.getAttributes().put(EAttribute.COSTPERHOUR, 25D);
+		ec3.getAttributes().put(EAttribute.BENCHMARK, 32D);
+		resources.add(ec1);
+		resources.add(ec2);
+		resources.add(ec3);
 		// merge amis and ec2-resozrces to get all combinations (which make
 		// sense)
 		Map<AMI, List<Instance>> amiInstances = new HashMap<AMI, List<Instance>>();
