@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
+import org.collaboration.cloudmapping.model.mapping.requirements.Requirement;
 
 /**
  * @author mugglmenzel
@@ -24,7 +25,6 @@ public class ComputeDecision extends Decision {
 
 	public ComputeDecision() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

@@ -21,7 +21,7 @@ import org.collaboration.cloudmapping.model.mapping.EAttribute;
 import org.collaboration.cloudmapping.model.mapping.Instance;
 import org.collaboration.cloudmapping.model.mapping.InstanceAlternative;
 
-public class SimpleAHPtest {
+public class CloudComponentMapper {
 
 	/**
 	 * @param args
