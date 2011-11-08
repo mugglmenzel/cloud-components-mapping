@@ -17,7 +17,7 @@ public class Attribute<T> implements Serializable, Cloneable,
 	 */
 	private static final long serialVersionUID = 1423409082864357874L;
 
-	private EAttribute name;
+	private IEAttribute name;
 
 	private Comparable<T> value;
 
@@ -25,17 +25,17 @@ public class Attribute<T> implements Serializable, Cloneable,
 	 * @param name
 	 * @param value
 	 */
-	public Attribute(EAttribute name, Comparable<T> value) {
+	public Attribute(IEAttribute name, Comparable<T> value) {
 		super();
 		this.name = name;
 		this.value = value;
 	}
 
-	public EAttribute getName() {
+	public IEAttribute getName() {
 		return name;
 	}
 
-	public void setName(EAttribute name) {
+	public void setName(IEAttribute name) {
 		this.name = name;
 	}
 

@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface IAttributedItem extends Cloneable, Serializable, Comparable<IAttributedItem> {
 
-	public Attribute<?> getAttribute(EAttribute attributeName);
+	public Attribute<?> getAttribute(IEAttribute attributeName);
 	
 	public Set<Attribute<?>> getAttributes();
 	

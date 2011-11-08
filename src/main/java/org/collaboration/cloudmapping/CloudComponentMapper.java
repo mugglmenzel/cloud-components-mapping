@@ -19,7 +19,7 @@ import org.collaboration.cloudmapping.model.jama.Matrix;
 import org.collaboration.cloudmapping.model.mapping.Appliance;
 import org.collaboration.cloudmapping.model.mapping.Attribute;
 import org.collaboration.cloudmapping.model.mapping.ComputeService;
-import org.collaboration.cloudmapping.model.mapping.EAttribute;
+import org.collaboration.cloudmapping.model.mapping.EComputeServiceAttribute;
 import org.collaboration.cloudmapping.model.mapping.Instance;
 import org.collaboration.cloudmapping.model.mapping.InstanceAlternative;
 import org.collaboration.cloudmapping.model.mapping.InstanceDecision;
@@ -49,19 +49,19 @@ public class CloudComponentMapper {
 		amis.add(new AMI("AMI_Name_234"));
 		EC2Resource ec1 = new EC2Resource("m1.small");
 		ec1.getAttributes().add(
-				new Attribute<Double>(EAttribute.COSTPERHOUR, 5D));
+				new Attribute<Double>(EComputeServiceAttribute.COSTPERHOUR, 5D));
 		ec1.getAttributes().add(
-				new Attribute<Double>(EAttribute.BENCHMARK, 30D));
+				new Attribute<Double>(EComputeServiceAttribute.CPUBENCHMARK, 30D));
 		EC2Resource ec2 = new EC2Resource("m1.large");
 		ec2.getAttributes().add(
-				new Attribute<Double>(EAttribute.COSTPERHOUR, 10D));
+				new Attribute<Double>(EComputeServiceAttribute.COSTPERHOUR, 10D));
 		ec2.getAttributes().add(
-				new Attribute<Double>(EAttribute.BENCHMARK, 12D));
+				new Attribute<Double>(EComputeServiceAttribute.CPUBENCHMARK, 12D));
 		EC2Resource ec3 = new EC2Resource("m1.xlarge");
 		ec3.getAttributes().add(
-				new Attribute<Double>(EAttribute.COSTPERHOUR, 25D));
+				new Attribute<Double>(EComputeServiceAttribute.COSTPERHOUR, 25D));
 		ec3.getAttributes().add(
-				new Attribute<Double>(EAttribute.BENCHMARK, 32D));
+				new Attribute<Double>(EComputeServiceAttribute.CPUBENCHMARK, 32D));
 		resources.add(ec1);
 		resources.add(ec2);
 		resources.add(ec3);
@@ -80,11 +80,11 @@ public class CloudComponentMapper {
 
 			decision.getFctRequirements().add(
 					new MinRequirement<Double>("Min Benchmark Result",
-							EAttribute.BENCHMARK, new RequirementItem<Double>(
+							EComputeServiceAttribute.CPUBENCHMARK, new RequirementItem<Double>(
 									15D)));
 			decision.getFctRequirements().add(
 					new MaxRequirement<Double>("Max Costs",
-							EAttribute.COSTPERHOUR,
+							EComputeServiceAttribute.COSTPERHOUR,
 							new RequirementItem<Double>(20D)));
 
 			/*
@@ -212,12 +212,12 @@ public class CloudComponentMapper {
 
 		for (int a = 0; a < resources.size(); a++) {
 			c = (Double) alt.get(a).getInstance().getComputeService()
-					.getAttribute(EAttribute.BENCHMARK).getValue();
+					.getAttribute(EComputeServiceAttribute.CPUBENCHMARK).getValue();
 			for (int b = 0; b < resources.size(); b++) {
 
 				critEv[a][b] = c
 						/ (Double) alt.get(b).getInstance().getComputeService()
-								.getAttribute(EAttribute.BENCHMARK).getValue();
+								.getAttribute(EComputeServiceAttribute.CPUBENCHMARK).getValue();
 				System.out.println("[" + critEv[a][b] + "]");
 			}
 			System.out.println("\n");
@@ -232,11 +232,11 @@ public class CloudComponentMapper {
 		double c;
 		for (int a = 0; a < resources.size(); a++) {
 			c = (Double) alt.get(a).getInstance().getComputeService()
-					.getAttribute(EAttribute.BENCHMARK).getValue();
+					.getAttribute(EComputeServiceAttribute.CPUBENCHMARK).getValue();
 			for (int b = 0; b < resources.size(); b++) {
 				critEv[a][b] = c
 						/ (Double) alt.get(b).getInstance().getComputeService()
-								.getAttribute(EAttribute.BENCHMARK).getValue();
+								.getAttribute(EComputeServiceAttribute.CPUBENCHMARK).getValue();
 			}
 
 		}
@@ -251,11 +251,11 @@ public class CloudComponentMapper {
 
 		for (int a = 0; a < resources.size(); a++) {
 			c = (Double) alt.get(a).getInstance().getComputeService()
-					.getAttribute(EAttribute.COSTPERHOUR).getValue();
+					.getAttribute(EComputeServiceAttribute.COSTPERHOUR).getValue();
 			for (int b = 0; b < resources.size(); b++) {
 				critEv[a][b] = c
 						/ (Double) alt.get(b).getInstance().getComputeService()
-								.getAttribute(EAttribute.COSTPERHOUR)
+								.getAttribute(EComputeServiceAttribute.COSTPERHOUR)
 								.getValue();
 			}
 

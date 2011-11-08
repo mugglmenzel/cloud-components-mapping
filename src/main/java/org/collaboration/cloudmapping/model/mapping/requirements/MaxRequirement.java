@@ -3,7 +3,7 @@
  */
 package org.collaboration.cloudmapping.model.mapping.requirements;
 
-import org.collaboration.cloudmapping.model.mapping.EAttribute;
+import org.collaboration.cloudmapping.model.mapping.IEAttribute;
 
 /**
  * @author mugglmenzel
@@ -17,7 +17,7 @@ public class MaxRequirement<T> extends Requirement<T> {
 	private static final long serialVersionUID = 7185304119011925915L;
 
 	public MaxRequirement(String name, 
-			EAttribute attribute, IRequirementItem<T> value) {
+			IEAttribute attribute, IRequirementItem<T> value) {
 		super(name, RequirementType.MAXIMUM, attribute, value);
 	}
 

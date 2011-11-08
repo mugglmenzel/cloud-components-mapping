@@ -61,7 +61,7 @@ public abstract class Appliance implements IAttributedItem {
 	}
 
 	@Override
-	public Attribute<?> getAttribute(EAttribute attributeName) {
+	public Attribute<?> getAttribute(IEAttribute attributeName) {
 		for (Attribute<?> a : getAttributes())
 			if (a.getName().equals(attributeName))
 				return a;

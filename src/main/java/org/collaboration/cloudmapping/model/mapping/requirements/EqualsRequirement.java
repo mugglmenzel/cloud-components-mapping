@@ -3,7 +3,7 @@
  */
 package org.collaboration.cloudmapping.model.mapping.requirements;
 
-import org.collaboration.cloudmapping.model.mapping.EAttribute;
+import org.collaboration.cloudmapping.model.mapping.IEAttribute;
 
 /**
  * @author mugglmenzel
@@ -17,7 +17,7 @@ public class EqualsRequirement<T> extends Requirement<T> {
 	 */
 	private static final long serialVersionUID = 7161931209823985667L;
 
-	public EqualsRequirement(String name, EAttribute attribute,
+	public EqualsRequirement(String name, IEAttribute attribute,
 			IRequirementItem<T> value) {
 		super(name, RequirementType.EQUALS, attribute, value);
 	}
