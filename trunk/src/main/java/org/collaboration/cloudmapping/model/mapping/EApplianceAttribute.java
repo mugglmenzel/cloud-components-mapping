@@ -7,13 +7,13 @@ package org.collaboration.cloudmapping.model.mapping;
  * @author mugglmenzel
  *
  */
-public enum EAttribute {
+public enum EApplianceAttribute implements IEAttribute {
 
-	COSTPERHOUR("costperhour"), BENCHMARK("benchmark");
+	COSTPERHOUR("costperhour"), POPULARITY("popularity");
 	
 	private String name;
 	
-	private EAttribute(String name) {
+	private EApplianceAttribute(String name) {
 		this.setName(name);
 	}
 

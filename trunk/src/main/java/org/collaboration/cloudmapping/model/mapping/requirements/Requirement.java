@@ -3,7 +3,7 @@ package org.collaboration.cloudmapping.model.mapping.requirements;
 import java.io.Serializable;
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.mapping.EAttribute;
+import org.collaboration.cloudmapping.model.mapping.IEAttribute;
 
 public abstract class Requirement<T> implements Serializable {
 	
@@ -16,14 +16,14 @@ public abstract class Requirement<T> implements Serializable {
 	
 	private RequirementType reqType;
 	
-	private EAttribute attributeName;
+	private IEAttribute attributeName;
 	
 	private IRequirementItem<T> value;
 	
 	private Set<IRequirementItem<T>> values;
 	
 	
-	public Requirement(String name, RequirementType reqType, EAttribute attribute, IRequirementItem<T> value) {
+	public Requirement(String name, RequirementType reqType, IEAttribute attribute, IRequirementItem<T> value) {
 		super();
 		this.name = name;
 		this.reqType = reqType;
@@ -31,7 +31,7 @@ public abstract class Requirement<T> implements Serializable {
 		this.value = value;
 	}
 	
-	public Requirement(String name, RequirementType reqType, EAttribute attribute, Set<IRequirementItem<T>> values) {
+	public Requirement(String name, RequirementType reqType, IEAttribute attribute, Set<IRequirementItem<T>> values) {
 		super();
 		this.name = name;
 		this.reqType = reqType;
@@ -66,7 +66,7 @@ public abstract class Requirement<T> implements Serializable {
 	/**
 	 * @return the attribute
 	 */
-	public EAttribute getAttributeName() {
+	public IEAttribute getAttributeName() {
 		return attributeName;
 	}
 
@@ -74,7 +74,7 @@ public abstract class Requirement<T> implements Serializable {
 	/**
 	 * @param attribute the attribute to set
 	 */
-	public void setAttributeName(EAttribute attribute) {
+	public void setAttributeName(IEAttribute attribute) {
 		this.attributeName = attribute;
 	}
 

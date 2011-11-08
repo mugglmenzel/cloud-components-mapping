@@ -39,7 +39,7 @@ public abstract class AbstractAttributedItem implements IAttributedItem {
 	 * (org.collaboration.cloudmapping.model.mapping.EAttribute)
 	 */
 	@Override
-	public Attribute<?> getAttribute(EAttribute attributeName) {
+	public Attribute<?> getAttribute(IEAttribute attributeName) {
 		for (Attribute<?> a : getAttributes())
 			if (a.getName().equals(attributeName))
 				return a;
