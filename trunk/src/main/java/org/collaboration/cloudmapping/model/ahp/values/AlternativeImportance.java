@@ -1,8 +1,8 @@
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Criterion;
 
 /**
  * 
@@ -161,6 +161,7 @@ public class AlternativeImportance implements Cloneable, Serializable {
 		return criterion;
 	}
 
+	@Override
 	public AlternativeImportance clone() {
 		return new AlternativeImportance(getAltA(), getAltB(), getCriterion(),
 				getComparisonAToB(), getDescription());

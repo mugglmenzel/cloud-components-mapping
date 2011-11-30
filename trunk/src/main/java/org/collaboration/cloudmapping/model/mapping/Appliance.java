@@ -1,12 +1,10 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.collaboration.cloudmapping.model.AMI;
 
 /**
  * @author mugglmenzel
@@ -56,6 +54,7 @@ public abstract class Appliance implements IAttributedItem {
 	/**
 	 * @return the attributes
 	 */
+	@Override
 	public Set<Attribute<?>> getAttributes() {
 		return attributes;
 	}

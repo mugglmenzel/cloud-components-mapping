@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 

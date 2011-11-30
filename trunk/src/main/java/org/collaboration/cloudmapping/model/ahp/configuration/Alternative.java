@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 
@@ -96,6 +96,7 @@ public class Alternative implements Serializable {
 		return description;
 	}
 
+	@Override
 	public Alternative clone() {
 		Alternative alt = new Alternative(getName());
 		alt.setDescription(getDescription());

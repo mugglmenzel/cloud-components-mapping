@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model;
+package de.eorg.cumulusgenius.shared.cloudmapping.model;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -10,7 +10,8 @@ public class ValueComparator implements Comparator {
 	      this.base = base;
 	  }
 
-	  public int compare(Object a, Object b) {
+	  @Override
+	public int compare(Object a, Object b) {
 
 	    if((Double)base.get(a) < (Double)base.get(b)) {
 	      return 1;

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.mapping.requirements;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.requirements;
 
 import java.util.SortedSet;
 
-import org.collaboration.cloudmapping.model.mapping.IEAttribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.IEAttribute;
 
 /**
  * @author mugglmenzel

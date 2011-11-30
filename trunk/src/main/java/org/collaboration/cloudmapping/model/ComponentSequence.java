@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model;
+package de.eorg.cumulusgenius.shared.cloudmapping.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.collaboration.cloudmapping.model.mapping.Component;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.Component;
 
 /**
  * @author menzel

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Decision;
 
 /**
  * @author mugglmenzel
@@ -192,6 +192,7 @@ public class GoalImportance implements Cloneable, Serializable {
 				+ ", critA=" + critA + ", critB=" + critB + "]";
 	}
 
+	@Override
 	public GoalImportance clone() {
 		return new GoalImportance(getCritA(), getCritB(),
 				getComparisonAToB(), getComment());

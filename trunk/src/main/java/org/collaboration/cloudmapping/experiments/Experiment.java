@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.experiments;
+package de.eorg.cumulusgenius.shared.cloudmapping.experiments;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,24 +11,24 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.LogManager;
 
-import org.collaboration.cloudmapping.logic.ahp.AnalyticHierarchyProcess;
-import org.collaboration.cloudmapping.model.AMI;
-import org.collaboration.cloudmapping.model.EC2Resource;
-import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
-import org.collaboration.cloudmapping.model.ahp.configuration.CriterionType;
-import org.collaboration.cloudmapping.model.ahp.configuration.Goal;
-import org.collaboration.cloudmapping.model.ahp.configuration.GoalType;
-import org.collaboration.cloudmapping.model.ahp.values.Evaluation;
-import org.collaboration.cloudmapping.model.ahp.values.EvaluationResult;
-import org.collaboration.cloudmapping.model.jama.Matrix;
-import org.collaboration.cloudmapping.model.mapping.ApplianceAlternative;
-import org.collaboration.cloudmapping.model.mapping.ApplianceDecision;
-import org.collaboration.cloudmapping.model.mapping.Attribute;
-import org.collaboration.cloudmapping.model.mapping.CombinationValue;
-import org.collaboration.cloudmapping.model.mapping.ComputeDecision;
-import org.collaboration.cloudmapping.model.mapping.ComputeServiceAlternative;
-import org.collaboration.cloudmapping.model.mapping.EApplianceAttribute;
-import org.collaboration.cloudmapping.model.mapping.EComputeServiceAttribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.logic.ahp.AnalyticHierarchyProcess;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.AMI;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.EC2Resource;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Criterion;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.CriterionType;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Goal;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.GoalType;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.Evaluation;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.EvaluationResult;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.jama.Matrix;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.ApplianceAlternative;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.ApplianceDecision;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.Attribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.CombinationValue;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.ComputeDecision;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.ComputeServiceAlternative;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.EApplianceAttribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.EComputeServiceAttribute;
 
 public class Experiment {
 

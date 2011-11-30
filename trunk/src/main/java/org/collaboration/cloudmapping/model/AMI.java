@@ -1,10 +1,10 @@
-package org.collaboration.cloudmapping.model;
+package de.eorg.cumulusgenius.shared.cloudmapping.model;
 
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.mapping.Appliance;
-import org.collaboration.cloudmapping.model.mapping.Attribute;
-import org.collaboration.cloudmapping.model.mapping.IAttributedItem;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.Appliance;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.Attribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.IAttributedItem;
 
 public class AMI extends Appliance {
 

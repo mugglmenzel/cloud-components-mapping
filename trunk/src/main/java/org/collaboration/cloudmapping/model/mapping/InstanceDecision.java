@@ -1,16 +1,17 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
-import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
-import org.collaboration.cloudmapping.model.mapping.requirements.Requirement;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Alternative;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Decision;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.requirements.Requirement;
+
 
 /**
  * @author mugglmenzel

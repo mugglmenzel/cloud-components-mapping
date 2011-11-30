@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 
@@ -67,7 +67,7 @@ public class DecisionTemplate extends Decision implements Serializable {
 	}
 
 	public Decision getDecision() {
-		return (Decision) clone();
+		return clone();
 	}
 
 	/**

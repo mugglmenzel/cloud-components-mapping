@@ -1,7 +1,7 @@
-package org.collaboration.cloudmapping.model;
+package de.eorg.cumulusgenius.shared.cloudmapping.model;
 
-import org.collaboration.cloudmapping.model.mapping.ComputeService;
-import org.collaboration.cloudmapping.model.mapping.IAttributedItem;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.ComputeService;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.IAttributedItem;
 
 public class EC2Resource extends ComputeService {
 

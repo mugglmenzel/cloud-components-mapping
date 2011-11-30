@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.jama.util;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.jama.util;
 
 public class Maths {
 
