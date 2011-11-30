@@ -1,28 +1,13 @@
-package org.collaboration.cloudmapping.model;
+package de.eorg.cumulusgenius.shared.cloudmapping.model;
 
-import static org.jclouds.ec2.options.RunInstancesOptions.Builder.asType;
-
-import java.util.Properties;
+import java.security.KeyPair;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.collaboration.cloudmapping.model.mapping.Instance;
-import org.jclouds.compute.ComputeServiceContextFactory;
-import org.jclouds.ec2.EC2AsyncClient;
-import org.jclouds.ec2.EC2Client;
-import org.jclouds.ec2.domain.InstanceType;
-import org.jclouds.ec2.domain.IpProtocol;
-import org.jclouds.ec2.domain.KeyPair;
-import org.jclouds.ec2.domain.Reservation;
-import org.jclouds.ec2.domain.RunningInstance;
-import org.jclouds.ec2.predicates.InstanceStateRunning;
-import org.jclouds.net.IPSocket;
-import org.jclouds.predicates.InetSocketAddressConnect;
-import org.jclouds.predicates.RetryablePredicate;
-import org.jclouds.rest.RestContext;
+import com.google.gwt.thirdparty.guava.common.collect.Iterables;
 
-import com.google.common.collect.Iterables;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.Instance;
 
 public class DeploymentManager {
 

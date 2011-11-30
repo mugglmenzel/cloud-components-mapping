@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
 
 public class Instance {
@@ -56,6 +56,7 @@ public class Instance {
 
 
 
+	@Override
 	public String toString() {
 
 		return "Appliance: " + this.appliance.getName() + "\n" + "Resource: "

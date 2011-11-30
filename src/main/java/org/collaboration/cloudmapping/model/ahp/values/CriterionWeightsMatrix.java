@@ -1,11 +1,11 @@
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.jama.Matrix;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.jama.Matrix;
 
 /**
  * 

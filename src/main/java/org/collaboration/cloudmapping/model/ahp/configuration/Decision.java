@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.collaboration.cloudmapping.model.ahp.values.GoalImportance;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.GoalImportance;
 
 /**
  * @author mugglmenzel A Decision is the main class of the data model. It
@@ -270,6 +270,7 @@ public class Decision implements Serializable, Cloneable {
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
+	@Override
 	public Decision clone() {
 		Decision dec = new Decision(getName());
 		dec.setDescription(getDescription());

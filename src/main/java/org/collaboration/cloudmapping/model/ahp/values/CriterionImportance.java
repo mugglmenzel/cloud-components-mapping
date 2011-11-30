@@ -1,11 +1,11 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Criterion;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Criterion;
 
 /**
  * @author mugglmenzel
@@ -80,6 +80,7 @@ public class CriterionImportance implements Cloneable, Serializable {
 		this.comment = comment;
 	}
 
+	@Override
 	public CriterionImportance clone() {
 		return new CriterionImportance(getCritA(), getCritB(),
 				getComparisonAToB(), getComment());

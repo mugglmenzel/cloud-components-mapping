@@ -1,6 +1,6 @@
-package org.collaboration.cloudmapping.model.jama;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.jama;
 
-import org.collaboration.cloudmapping.model.jama.util.Maths;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.jama.util.Maths;
 
 /**
  * Jama = Java Matrix class.
@@ -244,6 +244,7 @@ public class Matrix implements Cloneable, java.io.Serializable {
 	 * Clone the Matrix object.
 	 */
 
+	@Override
 	public Object clone() {
 		return this.copy();
 	}

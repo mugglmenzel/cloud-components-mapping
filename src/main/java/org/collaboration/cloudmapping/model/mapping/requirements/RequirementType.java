@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.mapping.requirements;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.requirements;
 
 import java.io.Serializable;
 

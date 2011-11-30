@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
 /**
  * @author mugglmenzel
@@ -20,6 +20,7 @@ public enum EApplianceAttribute implements IEAttribute {
 	/**
 	 * @param name the name to set
 	 */
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -27,6 +28,7 @@ public enum EApplianceAttribute implements IEAttribute {
 	/**
 	 * @return the name
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}

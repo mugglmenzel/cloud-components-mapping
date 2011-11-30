@@ -1,5 +1,6 @@
-package org.collaboration.cloudmapping.model.jama;
-import org.collaboration.cloudmapping.model.jama.util.Maths;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.jama;
+
+import de.eorg.cumulusgenius.shared.cloudmapping.model.jama.util.Maths;
 
    /** Singular Value Decomposition.
    <P>

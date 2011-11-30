@@ -1,9 +1,9 @@
-package org.collaboration.cloudmapping.model.mapping.requirements;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.requirements;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import org.collaboration.cloudmapping.model.mapping.IEAttribute;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.mapping.IEAttribute;
 
 public abstract class Requirement<T> implements Serializable {
 	

@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.jama;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.jama;
 
    /** Cholesky Decomposition.
    <P>

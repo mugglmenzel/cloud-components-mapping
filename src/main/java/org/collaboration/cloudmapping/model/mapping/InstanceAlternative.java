@@ -1,9 +1,9 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Alternative;
 
 /**
  * @author mugglmenzel

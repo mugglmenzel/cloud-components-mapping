@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.collaboration.cloudmapping.model.ahp.values;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.collaboration.cloudmapping.model.ahp.configuration.Alternative;
-import org.collaboration.cloudmapping.model.ahp.configuration.Decision;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Alternative;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Decision;
 
 /**
  * @author mugglmenzel

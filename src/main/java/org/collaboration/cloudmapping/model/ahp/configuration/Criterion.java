@@ -1,13 +1,13 @@
-package org.collaboration.cloudmapping.model.ahp.configuration;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.collaboration.cloudmapping.model.ahp.values.AlternativeImportance;
-import org.collaboration.cloudmapping.model.ahp.values.AlternativeValue;
-import org.collaboration.cloudmapping.model.ahp.values.CriterionImportance;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.AlternativeImportance;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.AlternativeValue;
+import de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.CriterionImportance;
 
 /**
  * 
@@ -426,6 +426,7 @@ public class Criterion implements Serializable {
 		return null;
 	}
 
+	@Override
 	public Criterion clone() {
 		Criterion c = new Criterion(getName());
 		c.setDescription(getDescription());

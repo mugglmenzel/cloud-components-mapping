@@ -1,4 +1,4 @@
-package org.collaboration.cloudmapping.model.mapping;
+package de.eorg.cumulusgenius.shared.cloudmapping.model.mapping;
 
 
 public abstract class ComputeService extends AbstractAttributedItem {
@@ -33,6 +33,7 @@ public abstract class ComputeService extends AbstractAttributedItem {
 		return name;
 	}
 	
+	@Override
 	public String toString() {
 		return getName();
 	}
