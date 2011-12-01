@@ -96,10 +96,10 @@ public class InstanceDecision extends Decision {
 	}
 
 	/*
-	 * Die Methode reqCheck mapped die Attribute auf die Requirements und prüft
-	 * diese so auf Erfüllung.
+	 * Die Methode reqCheck mapped die Attribute auf die Requirements und prÃ¼ft
+	 * diese so auf ErfÃ¼llung.
 	 */
-	// TODO: später als universelle Klasse/Methode einarbeiten, da
+	// TODO: spÃ¤ter als universelle Klasse/Methode einarbeiten, da
 	// ApplianceDecision ebenfalls Att. auf Requ. mapped
 	public void reqCheck() {
 
